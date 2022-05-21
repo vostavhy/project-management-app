@@ -6,6 +6,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.wrapper{
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  gap: 250px;
+}
+
+.wrapper-row{
+  display: flex;
+  gap: 150px;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
