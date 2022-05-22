@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import './App.css';
-import HomePage from '../HomePage';
-import NotFoundPage from '../NotFoundPage';
-import SignInPage from '../SignInPage';
-import MainPage from '../MainPage';
-import BoardPage from '../BoardPage';
+import HomePage from '../containers/HomePage';
+import NotFoundPage from '../containers/NotFoundPage';
+import SignInPage from '../containers/SignInPage';
+import MainPage from '../containers/MainPage';
+import BoardPage from '../containers/BoardPage';
 
 function App() {
   return (
