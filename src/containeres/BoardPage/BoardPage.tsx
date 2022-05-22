@@ -1,9 +1,5 @@
-const BoardPage = () => {
-  return (
-    <>
-      <div>BoardPage</div>
-    </>
-  );
+function BoardPage() {
+  return <div>BoardPage</div>;
 }
 
 export default BoardPage;
