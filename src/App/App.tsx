@@ -5,7 +5,7 @@ import NotFoundPage from '../containers/NotFoundPage';
 import SignInPage from '../containers/SignInPage';
 import MainPage from '../containers/MainPage';
 import BoardPage from '../containers/BoardPage';
-import { Layout } from '../containers/Layout';
+import { Layout } from '../components/Layout';
 
 function App() {
   return (
