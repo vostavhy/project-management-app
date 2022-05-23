@@ -26,8 +26,6 @@ export interface ITask {
 }
 
 const Task: FC<ITask> = ({ id, title, order, description, userId, boardId, columnId, files }) => {
-  console.log(id, title, order, description, userId, boardId, columnId, files);
-
   return (
     <>
       <li style={bordBox}>

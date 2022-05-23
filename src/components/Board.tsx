@@ -60,7 +60,7 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
           <ul>
             <ul style={wrapBox}>
               {tasks.map((props) => (
-                <Task key={id} {...props} />
+                <Task key={props.id} {...props} />
               ))}
             </ul>
           </ul>

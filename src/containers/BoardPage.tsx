@@ -26,7 +26,6 @@ const wrapBox = {
 function BoardPage() {
   const [columns, setColumns] = useState<IColumns[]>([]);
   const PromiseboarId = useLocation();
-  console.log(PromiseboarId.state);
   const state = PromiseboarId.state as IBoardId;
   const { boardId } = state;
 
