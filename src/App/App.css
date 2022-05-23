@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.descriptionBox {
+  width: 100px;
+  height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
