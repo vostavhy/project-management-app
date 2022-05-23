@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import Board from '../components/Board';
 import { API_BOARDS, API_COLUMNS, KANBAN_SERVICE_API } from '../constants/api';
 import { getAppiResource } from '../utils/network';
@@ -43,6 +44,7 @@ function BoardPage() {
   return (
     <>
       <div>
+        <Link to={'/main'}>Choose board</Link>
         <button>Add Column</button>
       </div>
       <ul style={wrapBox}>
