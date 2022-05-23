@@ -7,3 +7,4 @@ export const TEST_BOARD_ID = '49bec4b2-5a14-42c8-9804-cd58d1a3133f';
 
 export const API_BOARDS = 'boards';
 export const API_COLUMNS = 'columns';
+export const API_TASKS = 'tasks';

@@ -13,19 +13,13 @@ export interface IBoard {
 const wrapBox = {
   gap: '20px',
 };
-// const descriptionBox = {
-//   width: '50px',
-//   overflow: 'hidden',
-
-//   // whiteSpace: 'nowrap',
-//   textOverflow: 'ellipsis',
-// };
 
 const bordBox = {
   width: '300px',
   borderColor: 'red',
   borderStyle: 'solid',
   listStyleType: 'none',
+  margin: '5px',
 };
 //DELL
 function MainPage() {
@@ -36,7 +30,6 @@ function MainPage() {
     setBoards(res);
   };
 
-  // getResource();
   useEffect(() => {
     getResource();
   });
@@ -49,11 +42,10 @@ function MainPage() {
       <ul style={wrapBox}>
         {boards.map(({ id, title, description }) => (
           <li key={id} style={bordBox}>
-            <Link to={'/board'} state={{ id }}>
+            <Link to={'/board'} state={{ boardId: id }}>
               <h3>{title}</h3>
               <p className="descriptionBox">{description}</p>
             </Link>
-            <a href="#"></a>
             <button>Dell Board</button>
           </li>
         ))}
