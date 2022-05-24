@@ -1,15 +1,10 @@
 import { Container, Box, Typography, Grid, TextField, Button } from '@mui/material/';
-import { FormEvent } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 export default function SignUp() {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const { register, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
 
   return (
     <Container
@@ -25,16 +20,30 @@ export default function SignUp() {
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
-        <Box component='form' onSubmit={handleSubmit} mt={3}>
+        <Box
+          component='form'
+          onSubmit={handleSubmit((data) => {
+            console.log(data);
+            reset();
+            navigate('/main');
+          })}
+          mt={3}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField name='name' label='Name' required fullWidth />
+              <TextField label='Name' {...register('name')} required fullWidth />
             </Grid>
             <Grid item xs={12}>
-              <TextField name='login' label='Login' required fullWidth />
+              <TextField label='Login' {...register('login')} required fullWidth />
             </Grid>
             <Grid item xs={12}>
-              <TextField name='password' label='Password' type='password' required fullWidth />
+              <TextField
+                label='Password'
+                {...register('password')}
+                type='password'
+                required
+                fullWidth
+              />
             </Grid>
           </Grid>
           <Grid container justifyContent='flex-end'>
