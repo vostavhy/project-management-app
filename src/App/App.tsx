@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import WelcomePage from '../containers/WelcomePage';
 import NotFoundPage from '../containers/NotFoundPage';
-import SignInPage from '../containers/SignInPage';
+import SignUpPage from '../containers/SignUpPage';
 import MainPage from '../containers/MainPage';
 import BoardPage from '../containers/BoardPage';
 import { Layout } from '../components/Layout';
@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<WelcomePage />} />
-            <Route path='signIn' element={<SignInPage />} />
+            <Route path='signIn' element={<SignUpPage />} />
             <Route path='main' element={<MainPage />} />
             <Route path='board' element={<BoardPage />} />
             <Route path='*' element={<NotFoundPage />} />
