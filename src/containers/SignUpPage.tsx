@@ -12,7 +12,15 @@ export default function SignUp() {
   };
 
   return (
-    <Container component='main' maxWidth='sm'>
+    <Container
+      component='main'
+      maxWidth='sm'
+      sx={{
+        borderRadius: '4px',
+        boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
+        p: 1,
+      }}
+    >
       <Box display='flex' flexDirection='column' alignItems='center'>
         <Typography component='h1' variant='h5'>
           Sign up
