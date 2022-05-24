@@ -10,14 +10,14 @@ import { Layout } from '../components/Layout';
 function App() {
   return (
     <BrowserRouter>
-      <div className="wrapper">
+      <div className='wrapper'>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path='/' element={<Layout />}>
             <Route index element={<WelcomePage />} />
-            <Route path="signIn" element={<SignInPage />} />
-            <Route path="main" element={<MainPage />} />
-            <Route path="board" element={<BoardPage />} />
-            <Route path="*" element={<NotFoundPage />} />
+            <Route path='signIn' element={<SignInPage />} />
+            <Route path='main' element={<MainPage />} />
+            <Route path='board' element={<BoardPage />} />
+            <Route path='*' element={<NotFoundPage />} />
           </Route>
         </Routes>
       </div>

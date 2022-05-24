@@ -22,7 +22,6 @@
     "react/prop-types": "off",
     "react/display-name": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -30,7 +29,8 @@
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-var-requires": "off",
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": ["error", { "endOfLine": "auto", "jsxSingleQuote": true }]
   },
   "settings": {
     "react": {
