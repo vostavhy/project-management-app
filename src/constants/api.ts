@@ -1,7 +1,7 @@
 export const SWAGGER_API = 'https://sleepy-ocean-36153.herokuapp.com/docs/static/index.html#/';
 export const KANBAN_SERVICE_API = 'https://sleepy-ocean-36153.herokuapp.com/';
 
-interface ICreds {
+interface IUserCreds {
   id: string;
   name: string;
   login: string;
@@ -21,6 +21,6 @@ function saveToken(token: string) {
   localStorage.setItem('tokenData', token);
 }
 
-function saveUserCreds(creds: ICreds) {
+function saveUserCreds(creds: IUserCreds) {
   localStorage.setItem('userCreds', JSON.stringify(creds));
 }
