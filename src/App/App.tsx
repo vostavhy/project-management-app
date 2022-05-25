@@ -2,11 +2,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import WelcomePage from '../containers/WelcomePage';
 import NotFoundPage from '../containers/NotFoundPage';
-import SignPage from '../containers/SignPage';
+import SignUpInPage from '../containers/SignUpInPage';
 import MainPage from '../containers/MainPage';
 import BoardPage from '../containers/BoardPage';
 import { Layout } from '../components/Layout';
 import { signInRequest, signUpRequest } from '../constants/api';
+import UserUpdatePage from '../containers/UserUpdatePage';
 
 function App() {
   return (
@@ -17,12 +18,13 @@ function App() {
             <Route index element={<WelcomePage />} />
             <Route
               path='sign-up'
-              element={<SignPage name='Sign UP' apiRequest={signUpRequest} isName={true} />}
+              element={<SignUpInPage name='Sign UP' apiRequest={signUpRequest} isName={true} />}
             />
             <Route
               path='sign-in'
-              element={<SignPage name='Sign IN' apiRequest={signInRequest} isName={false} />}
+              element={<SignUpInPage name='Sign IN' apiRequest={signInRequest} isName={false} />}
             />
+            <Route path='user-update' element={<UserUpdatePage />} />
             <Route path='main' element={<MainPage />} />
             <Route path='board' element={<BoardPage />} />
             <Route path='*' element={<NotFoundPage />} />
