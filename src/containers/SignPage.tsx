@@ -2,9 +2,17 @@ import { Container, Box, Typography, Grid, TextField, Button } from '@mui/materi
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
-export default function SignIn() {
+export interface SignProps {
+  name: string;
+  apiRequest: (data: { [x: string]: unknown }) => void;
+  isName: boolean;
+}
+
+export default function Sign(props: SignProps) {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+
+  const { name, apiRequest, isName } = props;
 
   return (
     <Container
@@ -18,18 +26,24 @@ export default function SignIn() {
     >
       <Box display='flex' flexDirection='column' alignItems='center'>
         <Typography component='h1' variant='h5'>
-          Sign in
+          {name}
         </Typography>
         <Box
           component='form'
           onSubmit={handleSubmit((data) => {
-            console.log(data);
+            apiRequest(data);
             reset();
             navigate('/main');
           })}
           mt={3}
         >
           <Grid container spacing={2}>
+            {isName && (
+              <Grid item xs={12}>
+                <TextField label='Name' {...register('name')} required fullWidth />
+              </Grid>
+            )}
+
             <Grid item xs={12}>
               <TextField label='Login' {...register('login')} required fullWidth />
             </Grid>
@@ -46,7 +60,7 @@ export default function SignIn() {
           <Grid container justifyContent='flex-end'>
             <Grid item>
               <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
-                Sign in
+                {name}
               </Button>
             </Grid>
           </Grid>
