@@ -5,6 +5,9 @@ import { urlAPI } from './api';
 // user
 // user123
 
+// admin123
+// admin123
+
 interface IUserCreds {
   id: string;
   name: string;
@@ -18,6 +21,19 @@ interface IToken {
 export const signUpRequest = (data: { [x: string]: unknown }) => {
   console.log(data);
   console.log(urlAPI.signIn);
+  axios
+    .post(KANBAN_SERVICE_API + urlAPI.signUp, data)
+    .then((response) => {
+      if (response.status === 201) {
+        console.log(response.data);
+        saveUserCreds(response.data);
+      } else {
+        console.log(response);
+      }
+    })
+    .catch((error) => {
+      console.log(error.response.data.message);
+    });
 };
 
 export const signInRequest = (data: { [x: string]: unknown }) => {
@@ -34,7 +50,7 @@ export const signInRequest = (data: { [x: string]: unknown }) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error.response.data.message);
     });
 };
 
