@@ -8,26 +8,27 @@ import BoardPage from '../containers/BoardPage';
 import { Layout } from '../components/Layout';
 import { signInRequest, signUpRequest } from '../constants/api';
 import UserUpdatePage from '../containers/UserUpdatePage';
+import { path } from '../constants/enums';
 
 function App() {
   return (
     <BrowserRouter>
       <div className='wrapper'>
         <Routes>
-          <Route path='/' element={<Layout />}>
+          <Route path={path.home} element={<Layout />}>
             <Route index element={<WelcomePage />} />
             <Route
-              path='sign-up'
+              path={path.signUp}
               element={<SignUpInPage name='Sign UP' apiRequest={signUpRequest} isName={true} />}
             />
             <Route
-              path='sign-in'
+              path={path.signIn}
               element={<SignUpInPage name='Sign IN' apiRequest={signInRequest} isName={false} />}
             />
-            <Route path='user-update' element={<UserUpdatePage />} />
-            <Route path='main' element={<MainPage />} />
-            <Route path='board' element={<BoardPage />} />
-            <Route path='*' element={<NotFoundPage />} />
+            <Route path={path.userUpdate} element={<UserUpdatePage />} />
+            <Route path={path.main} element={<MainPage />} />
+            <Route path={path.board} element={<BoardPage />} />
+            <Route path={path.notFound} element={<NotFoundPage />} />
           </Route>
         </Routes>
       </div>

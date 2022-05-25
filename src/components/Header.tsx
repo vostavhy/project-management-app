@@ -1,12 +1,15 @@
 import { NavLink } from 'react-router-dom';
+import { path } from '../constants/enums';
 
 function Header() {
   return (
     <div className='wrapper-row'>
-      <NavLink to='/'>Home</NavLink>
-      <NavLink to='sign-up'>SignUpPage</NavLink>
-      <NavLink to='main'>MainPage</NavLink>
-      <NavLink to='board'>BoardPage</NavLink>
+      <NavLink to={path.home}>Home</NavLink>
+      <NavLink to={path.signUp}>SignUpPage</NavLink>
+      <NavLink to={path.signIn}>SignInPage</NavLink>
+      <NavLink to={path.userUpdate}>UserUpdate</NavLink>
+      <NavLink to={path.main}>MainPage</NavLink>
+      <NavLink to={path.board}>BoardPage</NavLink>
     </div>
   );
 }
