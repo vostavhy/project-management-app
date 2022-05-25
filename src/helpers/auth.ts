@@ -2,12 +2,6 @@ import axios from 'axios';
 import { KANBAN_SERVICE_API } from './api';
 import { urlAPI } from './api';
 
-// user
-// user123
-
-// admin123
-// admin123
-
 interface IUserCreds {
   id: string;
   name: string;
@@ -26,7 +20,7 @@ export const signUpRequest = (data: { [x: string]: unknown }) => {
     .then((response) => {
       if (response.status === 201) {
         console.log(response.data);
-        saveUserCreds(response.data);
+        saveCreds(response.data);
       } else {
         console.log(response);
       }
@@ -37,6 +31,7 @@ export const signUpRequest = (data: { [x: string]: unknown }) => {
 };
 
 export const signInRequest = (data: { [x: string]: unknown }) => {
+  delete data.name;
   console.log(data);
   console.log(urlAPI.signIn);
   axios
@@ -54,10 +49,55 @@ export const signInRequest = (data: { [x: string]: unknown }) => {
     });
 };
 
+export const userUpdate = (data: { [x: string]: unknown }) => {
+  const credsData: IUserCreds = getCreds();
+  axios
+    .put(KANBAN_SERVICE_API + urlAPI.users + credsData.id, data)
+    .then((response) => {
+      console.log(response.data);
+      saveCreds(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const userDelete = () => {
+  const credsData: IUserCreds = getCreds();
+  const token = getToken();
+  console.log('token', token);
+  axios
+    .delete(KANBAN_SERVICE_API + urlAPI.users + credsData.id, getConfig())
+    .then(() => {
+      console.log(credsData, 'was deleted');
+      localStorage.clear();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 function saveToken(token: IToken) {
   localStorage.setItem('tokenData', JSON.stringify(token));
 }
 
-function saveUserCreds(creds: IUserCreds) {
-  localStorage.setItem('userCreds', JSON.stringify(creds));
+function getToken(): string {
+  const tokenData: IToken = JSON.parse(localStorage.getItem('tokenData') as string);
+  return tokenData.token;
+}
+
+function saveCreds(creds: IUserCreds) {
+  localStorage.setItem('credsData', JSON.stringify(creds));
+}
+
+function getCreds(): IUserCreds {
+  return JSON.parse(localStorage.getItem('credsData') as string);
+}
+
+function getConfig() {
+  return {
+    headers: {
+      Authorization: 'Bearer ' + getToken(),
+    },
+  };
 }
