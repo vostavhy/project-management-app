@@ -1,8 +1,6 @@
 import axios from 'axios';
+import { KANBAN_SERVICE_API } from './api';
 import { path } from './enums';
-
-export const SWAGGER_API = 'https://sleepy-ocean-36153.herokuapp.com/docs/static/index.html#/';
-export const KANBAN_SERVICE_API = 'https://sleepy-ocean-36153.herokuapp.com/';
 
 interface IUserCreds {
   id: string;
@@ -12,13 +10,13 @@ interface IUserCreds {
 
 export const signUpRequest = (data: { [x: string]: unknown }) => {
   console.log(data);
-  axios.post(KANBAN_SERVICE_API + path.signUp);
   console.log(path.signUp);
 };
 
 export const signInRequest = (data: { [x: string]: unknown }) => {
   console.log(data);
   console.log('sign in');
+  axios.post(KANBAN_SERVICE_API + path.signIn);
 };
 
 function saveToken(token: string) {

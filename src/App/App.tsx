@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import WelcomePage from '../containers/WelcomePage';
-import NotFoundPage from '../containers/NotFoundPage';
-import SignUpInPage from '../containers/SignUpInPage';
-import MainPage from '../containers/MainPage';
-import BoardPage from '../containers/BoardPage';
+import WelcomePage from '../pages/WelcomePage';
+import NotFoundPage from '../pages/NotFoundPage';
+import SignUpInPage from '../pages/SignUpInPage';
+import MainPage from '../pages/MainPage';
+import BoardPage from '../pages/BoardPage';
 import { Layout } from '../components/Layout';
-import { signInRequest, signUpRequest } from '../constants/api';
-import UserUpdatePage from '../containers/UserUpdatePage';
-import { path } from '../constants/enums';
+import { signInRequest, signUpRequest } from '../helpers/auth';
+import UserUpdatePage from '../pages/UserUpdatePage';
+import { path } from '../helpers/enums';
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { path } from '../constants/enums';
+import { path } from '../helpers/enums';
 
 function Header() {
   return (
