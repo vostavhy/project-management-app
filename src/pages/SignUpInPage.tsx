@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 
 export interface SignProps {
   name: string;
-  apiRequest: (data: { [x: string]: unknown }) => void;
+  apiRequest: (data: { [x: string]: string }) => void;
   isName: boolean;
 }
 
@@ -32,8 +32,8 @@ export default function Sign(props: SignProps) {
           component='form'
           onSubmit={handleSubmit((data) => {
             apiRequest(data);
-            reset();
-            navigate('/main');
+            //reset();
+            //navigate('/main');
           })}
           mt={3}
         >

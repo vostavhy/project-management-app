@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { KANBAN_SERVICE_API } from './api';
-import { path } from './enums';
+import { urlAPI } from './api';
+
+// user
+// user123
 
 interface IUserCreds {
   id: string;
@@ -8,19 +11,35 @@ interface IUserCreds {
   login: string;
 }
 
+interface IToken {
+  token: string;
+}
+
 export const signUpRequest = (data: { [x: string]: unknown }) => {
   console.log(data);
-  console.log(path.signUp);
+  console.log(urlAPI.signIn);
 };
 
 export const signInRequest = (data: { [x: string]: unknown }) => {
   console.log(data);
-  console.log('sign in');
-  axios.post(KANBAN_SERVICE_API + path.signIn);
+  console.log(urlAPI.signIn);
+  axios
+    .post(KANBAN_SERVICE_API + urlAPI.signIn, data)
+    .then((response) => {
+      if (response.status === 201) {
+        console.log(response.data);
+        saveToken(response.data);
+      } else {
+        console.log(response);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
-function saveToken(token: string) {
-  localStorage.setItem('tokenData', token);
+function saveToken(token: IToken) {
+  localStorage.setItem('tokenData', JSON.stringify(token));
 }
 
 function saveUserCreds(creds: IUserCreds) {
