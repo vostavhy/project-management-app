@@ -1,7 +1,7 @@
 import { Container, Box, Typography, Grid, TextField, Button } from '@mui/material/';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { userDelete } from '../helpers/auth';
+import { userDelete, userUpdate } from '../helpers/auth';
 
 export default function SignUp() {
   const { register, handleSubmit, reset } = useForm();
@@ -29,9 +29,9 @@ export default function SignUp() {
         <Box
           component='form'
           onSubmit={handleSubmit((data) => {
-            console.log(data);
-            reset();
-            navigate('/main');
+            userUpdate(data);
+            //reset();
+            //navigate('/main');
           })}
           mt={3}
         >

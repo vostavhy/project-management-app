@@ -52,7 +52,7 @@ export const signInRequest = (data: { [x: string]: unknown }) => {
 export const userUpdate = (data: { [x: string]: unknown }) => {
   const credsData: IUserCreds = getCreds();
   axios
-    .put(KANBAN_SERVICE_API + urlAPI.users + credsData.id, data)
+    .put(KANBAN_SERVICE_API + urlAPI.users + credsData.id, data, getConfig())
     .then((response) => {
       console.log(response.data);
       saveCreds(response.data);
