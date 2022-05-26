@@ -1,10 +1,11 @@
 import { Container, Box, Typography, Grid, TextField, Button } from '@mui/material/';
+import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
 export interface SignProps {
   name: string;
-  apiRequest: (data: { [x: string]: string }) => void;
+  apiRequest: (data: { [x: string]: string }) => Promise<void>;
   isName: boolean;
 }
 
@@ -30,8 +31,14 @@ export default function Sign(props: SignProps) {
         </Typography>
         <Box
           component='form'
-          onSubmit={handleSubmit((data) => {
-            apiRequest(data);
+          onSubmit={handleSubmit(async (data) => {
+            try {
+              await apiRequest(data);
+              console.log('OK');
+            } catch (error) {
+              console.log(error);
+            }
+
             //reset();
             //navigate('/main');
           })}

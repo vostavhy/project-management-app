@@ -12,21 +12,21 @@ interface IToken {
   token: string;
 }
 
-export const signUpRequest = (data: { [x: string]: unknown }) => {
+export const signUpRequest = (data: { [x: string]: unknown }): Promise<void> => {
   console.log(data);
-  console.log(urlAPI.signIn);
-  axios
+  console.log(urlAPI.signUp);
+  return axios
     .post(KANBAN_SERVICE_API + urlAPI.signUp, data)
     .then((response) => {
       if (response.status === 201) {
         console.log(response.data);
         saveCreds(response.data);
       } else {
-        console.log(response);
+        throw `BAD RESPONSE: ${response.data.message}`;
       }
     })
     .catch((error) => {
-      console.log(error.response.data.message);
+      throw `ERROR: ${error.response.data.message}`;
     });
 };
 
@@ -34,18 +34,18 @@ export const signInRequest = (data: { [x: string]: unknown }) => {
   delete data.name;
   console.log(data);
   console.log(urlAPI.signIn);
-  axios
+  return axios
     .post(KANBAN_SERVICE_API + urlAPI.signIn, data)
     .then((response) => {
       if (response.status === 201) {
         console.log(response.data);
         saveToken(response.data);
       } else {
-        console.log(response);
+        throw `BAD RESPONSE: ${response.data.message}`;
       }
     })
     .catch((error) => {
-      console.log(error.response.data.message);
+      throw `ERROR: ${error.response.data.message}`;
     });
 };
 
