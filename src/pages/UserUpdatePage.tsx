@@ -38,7 +38,7 @@ export default function UpdatePage() {
     if (!getCreds()) {
       navigate(`/${path.signIn}`);
     }
-  });
+  }, []);
 
   const showMsg = (msg: string, isError: boolean) => {
     setIsError(isError);
@@ -52,7 +52,9 @@ export default function UpdatePage() {
       await userDeleteRequest();
       setIsLoading(false);
       showMsg('User was deleted!', false);
-      navigate(path.home);
+      setTimeout(() => {
+        navigate(path.home);
+      }, 1000);
     } catch (error) {
       setIsLoading(false);
       showMsg(error as string, true);
