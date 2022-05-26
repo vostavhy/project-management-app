@@ -19,7 +19,7 @@ export interface SignProps {
 }
 
 export default function Sign(props: SignProps) {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState(false);
@@ -28,15 +28,9 @@ export default function Sign(props: SignProps) {
 
   const { name, apiRequest, isName } = props;
 
-  const showError = (error: string) => {
-    setIsError(true);
-    setSnackMsg(error);
-    setIsSnackOpen(true);
-  };
-
-  const showSuccessMsg = () => {
-    setIsError(false);
-    setSnackMsg('Success!');
+  const showMsg = (msg: string, isError: boolean) => {
+    setIsError(isError);
+    setSnackMsg(msg);
     setIsSnackOpen(true);
   };
 
@@ -61,14 +55,12 @@ export default function Sign(props: SignProps) {
             try {
               await apiRequest(data);
               setIsLoading(false);
-              showSuccessMsg();
+              showMsg('Success', false);
+              setTimeout(() => navigate('/main'), 1000);
             } catch (error) {
               setIsLoading(false);
-              showError(error as string);
+              showMsg(error as string, true);
             }
-
-            //reset();
-            //navigate('/main');
           })}
           mt={3}
         >
