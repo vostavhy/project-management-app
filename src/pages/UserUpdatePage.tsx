@@ -7,9 +7,13 @@ export default function SignUp() {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
-  const handleDelete = () => {
-    userDeleteRequest();
-    console.log('User deleted');
+  const handleDelete = async () => {
+    try {
+      await userDeleteRequest();
+      console.log('User deleted');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

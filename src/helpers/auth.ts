@@ -58,14 +58,13 @@ export const userDeleteRequest = () => {
   const credsData: IUserCreds = getCreds();
   const token = getToken();
   console.log('token', token);
-  axios
+  return axios
     .delete(KANBAN_SERVICE_API + urlAPI.users + credsData.id, getConfig())
     .then(() => {
-      console.log(credsData, 'was deleted');
       localStorage.clear();
     })
     .catch((error) => {
-      console.log(error);
+      throw `ERROR: ${error.response.data.message}`;
     });
 };
 
