@@ -1,23 +1,48 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import HomePage from '../containers/HomePage';
-import NotFoundPage from '../containers/NotFoundPage';
-import SignInPage from '../containers/SignInPage';
-import MainPage from '../containers/MainPage';
-import BoardPage from '../containers/BoardPage';
+import WelcomePage from '../pages/WelcomePage';
+import NotFoundPage from '../pages/NotFoundPage';
+import SignUpInPage from '../pages/SignUpInPage';
+import MainPage from '../pages/MainPage';
+import BoardPage from '../pages/BoardPage';
 import { Layout } from '../components/Layout';
+import { signInRequest, signUpRequest } from '../helpers/auth';
+import UserUpdatePage from '../pages/UserUpdatePage';
+import { path } from '../helpers/enums';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="wrapper">
+      <div className='wrapper'>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="signIn" element={<SignInPage />} />
-            <Route path="main" element={<MainPage />} />
-            <Route path="board" element={<BoardPage />} />
-            <Route path="*" element={<NotFoundPage />} />
+          <Route path={path.home} element={<Layout />}>
+            <Route index element={<WelcomePage />} />
+            <Route
+              path={path.signUp}
+              element={
+                <SignUpInPage
+                  name='Sign UP'
+                  apiRequest={signUpRequest}
+                  isName={true}
+                  redirectPath={`/${path.signIn}`}
+                />
+              }
+            />
+            <Route
+              path={path.signIn}
+              element={
+                <SignUpInPage
+                  name='Sign IN'
+                  apiRequest={signInRequest}
+                  isName={false}
+                  redirectPath={`/${path.main}`}
+                />
+              }
+            />
+            <Route path={path.userUpdate} element={<UserUpdatePage />} />
+            <Route path={path.main} element={<MainPage />} />
+            <Route path={path.board} element={<BoardPage />} />
+            <Route path={path.notFound} element={<NotFoundPage />} />
           </Route>
         </Routes>
       </div>
