@@ -19,7 +19,6 @@ export const signUpRequest = (data: { [x: string]: unknown }): Promise<void> => 
     .post(KANBAN_SERVICE_API + urlAPI.signUp, data)
     .then((response) => {
       console.log(response.data);
-      saveCreds(response.data);
     })
     .catch((error) => {
       throw `ERROR: ${error.response.data.message}`;
@@ -35,6 +34,7 @@ export const signInRequest = (data: { [x: string]: unknown }) => {
     .then((response) => {
       console.log(response.data);
       saveToken(response.data);
+      refreshCreds(data.login as string);
     })
     .catch((error) => {
       throw `ERROR: ${error.response.data.message}`;
@@ -83,6 +83,20 @@ function saveCreds(creds: IUserCreds) {
 
 function getCreds(): IUserCreds {
   return JSON.parse(localStorage.getItem('credsData') as string);
+}
+
+function refreshCreds(login: string) {
+  axios
+    .get(KANBAN_SERVICE_API + 'users', getConfig())
+    .then((response) => {
+      const creds = response.data.filter((item: IUserCreds) => {
+        return item.login === login;
+      })[0];
+      saveCreds(creds);
+    })
+    .catch((error) => {
+      console.log('refresh creds error: ', error);
+    });
 }
 
 function getConfig() {
