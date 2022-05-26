@@ -16,9 +16,10 @@ export interface SignProps {
   name: string;
   apiRequest: (data: { [x: string]: string }) => Promise<void>;
   isName: boolean;
+  redirectPath: string;
 }
 
-export default function Sign(props: SignProps) {
+export default function SignInUpPage(props: SignProps) {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +27,7 @@ export default function Sign(props: SignProps) {
   const [isError, setIsError] = useState(false);
   const [snackMsg, setSnackMsg] = useState('Success!');
 
-  const { name, apiRequest, isName } = props;
+  const { name, apiRequest, isName, redirectPath } = props;
 
   const showMsg = (msg: string, isError: boolean) => {
     setIsError(isError);
@@ -56,7 +57,7 @@ export default function Sign(props: SignProps) {
               await apiRequest(data);
               setIsLoading(false);
               showMsg('Success', false);
-              setTimeout(() => navigate('/'), 1000);
+              setTimeout(() => navigate(redirectPath), 1000);
             } catch (error) {
               setIsLoading(false);
               showMsg(error as string, true);

@@ -7,13 +7,14 @@ import {
   Button,
   CircularProgress,
 } from '@mui/material/';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { Snack } from '../components/Snack';
-import { userDeleteRequest, userUpdateRequest } from '../helpers/auth';
+import { getCreds, userDeleteRequest, userUpdateRequest } from '../helpers/auth';
+import { path } from '../helpers/enums';
 
-export default function SignUp() {
+export default function UpdatePage() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
@@ -21,6 +22,23 @@ export default function SignUp() {
   const [isSnackOpen, setIsSnackOpen] = useState(false);
   const [isError, setIsError] = useState(false);
   const [snackMsg, setSnackMsg] = useState('Success!');
+
+  const creds =
+    getCreds() === null
+      ? {
+          name: '',
+          login: '',
+        }
+      : getCreds();
+
+  console.log('creds: ', creds);
+
+  // если учетных данных нет, открывать страницу авторизации
+  useEffect(() => {
+    if (!getCreds()) {
+      navigate(`/${path.signIn}`);
+    }
+  });
 
   const showMsg = (msg: string, isError: boolean) => {
     setIsError(isError);
@@ -34,7 +52,19 @@ export default function SignUp() {
       await userDeleteRequest();
       setIsLoading(false);
       showMsg('User was deleted!', false);
-      navigate('/');
+      navigate(path.home);
+    } catch (error) {
+      setIsLoading(false);
+      showMsg(error as string, true);
+    }
+  };
+
+  const userUpdate = async (data: { [x: string]: unknown }) => {
+    setIsLoading(true);
+    try {
+      await userUpdateRequest(data);
+      setIsLoading(false);
+      showMsg('User data was updated!', false);
     } catch (error) {
       setIsLoading(false);
       showMsg(error as string, true);
@@ -55,27 +85,25 @@ export default function SignUp() {
         <Typography component='h1' variant='h5'>
           Update
         </Typography>
-        <Box
-          component='form'
-          onSubmit={handleSubmit(async (data) => {
-            setIsLoading(true);
-            try {
-              await userUpdateRequest(data);
-              setIsLoading(false);
-              showMsg('User data was updated!', false);
-            } catch (error) {
-              setIsLoading(false);
-              showMsg(error as string, true);
-            }
-          })}
-          mt={3}
-        >
+        <Box component='form' onSubmit={handleSubmit(userUpdate)} mt={3}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField label='Name' {...register('name')} required fullWidth />
+              <TextField
+                label='Name'
+                {...register('name')}
+                defaultValue={creds.name}
+                required
+                fullWidth
+              />
             </Grid>
             <Grid item xs={12}>
-              <TextField label='Login' {...register('login')} required fullWidth />
+              <TextField
+                label='Login'
+                {...register('login')}
+                defaultValue={creds.login}
+                required
+                fullWidth
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField

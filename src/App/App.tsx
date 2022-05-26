@@ -19,11 +19,25 @@ function App() {
             <Route index element={<WelcomePage />} />
             <Route
               path={path.signUp}
-              element={<SignUpInPage name='Sign UP' apiRequest={signUpRequest} isName={true} />}
+              element={
+                <SignUpInPage
+                  name='Sign UP'
+                  apiRequest={signUpRequest}
+                  isName={true}
+                  redirectPath={`/${path.signIn}`}
+                />
+              }
             />
             <Route
               path={path.signIn}
-              element={<SignUpInPage name='Sign IN' apiRequest={signInRequest} isName={false} />}
+              element={
+                <SignUpInPage
+                  name='Sign IN'
+                  apiRequest={signInRequest}
+                  isName={false}
+                  redirectPath={`/${path.main}`}
+                />
+              }
             />
             <Route path={path.userUpdate} element={<UserUpdatePage />} />
             <Route path={path.main} element={<MainPage />} />

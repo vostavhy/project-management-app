@@ -81,7 +81,7 @@ function saveCreds(creds: IUserCreds) {
   localStorage.setItem('credsData', JSON.stringify(creds));
 }
 
-function getCreds(): IUserCreds {
+export function getCreds(): IUserCreds {
   return JSON.parse(localStorage.getItem('credsData') as string);
 }
 
