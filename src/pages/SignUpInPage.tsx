@@ -56,7 +56,7 @@ export default function Sign(props: SignProps) {
               await apiRequest(data);
               setIsLoading(false);
               showMsg('Success', false);
-              setTimeout(() => navigate('/main'), 1000);
+              setTimeout(() => navigate('/'), 1000);
             } catch (error) {
               setIsLoading(false);
               showMsg(error as string, true);

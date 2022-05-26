@@ -1,18 +1,43 @@
-import { Container, Box, Typography, Grid, TextField, Button } from '@mui/material/';
+import {
+  Container,
+  Box,
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  CircularProgress,
+} from '@mui/material/';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import { Snack } from '../components/Snack';
 import { userDeleteRequest, userUpdateRequest } from '../helpers/auth';
 
 export default function SignUp() {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSnackOpen, setIsSnackOpen] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [snackMsg, setSnackMsg] = useState('Success!');
+
+  const showMsg = (msg: string, isError: boolean) => {
+    setIsError(isError);
+    setSnackMsg(msg);
+    setIsSnackOpen(true);
+  };
+
   const handleDelete = async () => {
+    setIsLoading(true);
     try {
       await userDeleteRequest();
-      console.log('User deleted');
+      setIsLoading(false);
+      showMsg('User was deleted!', false);
+      navigate('/');
     } catch (error) {
-      console.log(error);
+      setIsLoading(false);
+      showMsg(error as string, true);
     }
   };
 
@@ -33,14 +58,15 @@ export default function SignUp() {
         <Box
           component='form'
           onSubmit={handleSubmit(async (data) => {
+            setIsLoading(true);
             try {
               await userUpdateRequest(data);
-              console.log('OK');
+              setIsLoading(false);
+              showMsg('User data was updated!', false);
             } catch (error) {
-              console.log(error);
+              setIsLoading(false);
+              showMsg(error as string, true);
             }
-            //reset();
-            //navigate('/main');
           })}
           mt={3}
         >
@@ -72,6 +98,11 @@ export default function SignUp() {
                 Delete
               </Button>
             </Grid>
+            {isLoading && (
+              <Grid item>
+                <CircularProgress size={30} sx={{ mr: 2 }} />
+              </Grid>
+            )}
             <Grid item>
               <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
                 Update
@@ -80,6 +111,12 @@ export default function SignUp() {
           </Grid>
         </Box>
       </Box>
+      <Snack
+        isOpen={isSnackOpen}
+        handleClose={() => setIsSnackOpen(false)}
+        msg={snackMsg}
+        isError={isError}
+      />
     </Container>
   );
 }
