@@ -1,7 +1,16 @@
-import { Container, Box, Typography, Grid, TextField, Button } from '@mui/material/';
-import { AxiosError } from 'axios';
+import {
+  Container,
+  Box,
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  CircularProgress,
+} from '@mui/material/';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import { Snack } from '../components/Snack';
 
 export interface SignProps {
   name: string;
@@ -12,8 +21,24 @@ export interface SignProps {
 export default function Sign(props: SignProps) {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSnackOpen, setIsSnackOpen] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [snackMsg, setSnackMsg] = useState('Success!');
 
   const { name, apiRequest, isName } = props;
+
+  const showError = (error: string) => {
+    setIsError(true);
+    setSnackMsg(error);
+    setIsSnackOpen(true);
+  };
+
+  const showSuccessMsg = () => {
+    setIsError(false);
+    setSnackMsg('Success!');
+    setIsSnackOpen(true);
+  };
 
   return (
     <Container
@@ -32,11 +57,14 @@ export default function Sign(props: SignProps) {
         <Box
           component='form'
           onSubmit={handleSubmit(async (data) => {
+            setIsLoading(true);
             try {
               await apiRequest(data);
-              console.log('OK');
+              setIsLoading(false);
+              showSuccessMsg();
             } catch (error) {
-              console.log(error);
+              setIsLoading(false);
+              showError(error as string);
             }
 
             //reset();
@@ -64,15 +92,26 @@ export default function Sign(props: SignProps) {
               />
             </Grid>
           </Grid>
-          <Grid container justifyContent='flex-end'>
+          <Grid container justifyContent='flex-end' alignItems='center' sx={{ mt: 2, mb: 2 }}>
+            {isLoading && (
+              <Grid item>
+                <CircularProgress size={30} sx={{ mr: 2 }} />
+              </Grid>
+            )}
             <Grid item>
-              <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
+              <Button type='submit' variant='contained'>
                 {name}
               </Button>
             </Grid>
           </Grid>
         </Box>
       </Box>
+      <Snack
+        isOpen={isSnackOpen}
+        handleClose={() => setIsSnackOpen(false)}
+        msg={snackMsg}
+        isError={isError}
+      />
     </Container>
   );
 }
