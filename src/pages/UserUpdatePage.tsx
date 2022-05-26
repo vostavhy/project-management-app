@@ -1,14 +1,14 @@
 import { Container, Box, Typography, Grid, TextField, Button } from '@mui/material/';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { userDelete, userUpdate } from '../helpers/auth';
+import { userDeleteRequest, userUpdateRequest } from '../helpers/auth';
 
 export default function SignUp() {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
   const handleDelete = () => {
-    userDelete();
+    userDeleteRequest();
     console.log('User deleted');
   };
 
@@ -28,8 +28,13 @@ export default function SignUp() {
         </Typography>
         <Box
           component='form'
-          onSubmit={handleSubmit((data) => {
-            userUpdate(data);
+          onSubmit={handleSubmit(async (data) => {
+            try {
+              await userUpdateRequest(data);
+              console.log('OK');
+            } catch (error) {
+              console.log(error);
+            }
             //reset();
             //navigate('/main');
           })}

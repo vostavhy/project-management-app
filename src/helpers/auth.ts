@@ -18,12 +18,8 @@ export const signUpRequest = (data: { [x: string]: unknown }): Promise<void> => 
   return axios
     .post(KANBAN_SERVICE_API + urlAPI.signUp, data)
     .then((response) => {
-      if (response.status === 201) {
-        console.log(response.data);
-        saveCreds(response.data);
-      } else {
-        throw `BAD RESPONSE: ${response.data.message}`;
-      }
+      console.log(response.data);
+      saveCreds(response.data);
     })
     .catch((error) => {
       throw `ERROR: ${error.response.data.message}`;
@@ -37,32 +33,28 @@ export const signInRequest = (data: { [x: string]: unknown }) => {
   return axios
     .post(KANBAN_SERVICE_API + urlAPI.signIn, data)
     .then((response) => {
-      if (response.status === 201) {
-        console.log(response.data);
-        saveToken(response.data);
-      } else {
-        throw `BAD RESPONSE: ${response.data.message}`;
-      }
+      console.log(response.data);
+      saveToken(response.data);
     })
     .catch((error) => {
       throw `ERROR: ${error.response.data.message}`;
     });
 };
 
-export const userUpdate = (data: { [x: string]: unknown }) => {
+export const userUpdateRequest = (data: { [x: string]: unknown }) => {
   const credsData: IUserCreds = getCreds();
-  axios
+  return axios
     .put(KANBAN_SERVICE_API + urlAPI.users + credsData.id, data, getConfig())
     .then((response) => {
       console.log(response.data);
       saveCreds(response.data);
     })
     .catch((error) => {
-      console.log(error);
+      throw `ERROR: ${error.response.data.message}`;
     });
 };
 
-export const userDelete = () => {
+export const userDeleteRequest = () => {
   const credsData: IUserCreds = getCreds();
   const token = getToken();
   console.log('token', token);
