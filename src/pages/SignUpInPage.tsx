@@ -6,11 +6,13 @@ import {
   TextField,
   Button,
   CircularProgress,
+  Link,
 } from '@mui/material/';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { Snack } from '../components/Snack';
+import { path } from '../helpers/enums';
 
 export interface SignProps {
   name: string;
@@ -85,7 +87,7 @@ export default function SignInUpPage(props: SignProps) {
               />
             </Grid>
           </Grid>
-          <Grid container justifyContent='flex-end' alignItems='center' sx={{ mt: 2, mb: 2 }}>
+          <Grid container sx={{ mt: 2, mb: 2, justifyContent: 'flex-end', alignItems: 'center' }}>
             {isLoading && (
               <Grid item>
                 <CircularProgress size={30} sx={{ mr: 2 }} />
@@ -96,6 +98,13 @@ export default function SignInUpPage(props: SignProps) {
                 {name}
               </Button>
             </Grid>
+          </Grid>
+          <Grid item textAlign='right'>
+            {isName ? (
+              <Link href={path.signIn}>{'Already have an account? Sign in'}</Link>
+            ) : (
+              <Link href={path.signUp}>{"Don't have an account? Sign up"}</Link>
+            )}
           </Grid>
         </Box>
       </Box>
