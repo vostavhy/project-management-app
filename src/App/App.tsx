@@ -13,39 +13,37 @@ import { path } from '../helpers/enums';
 function App() {
   return (
     <BrowserRouter>
-      <div className='wrapper'>
-        <Routes>
-          <Route path={path.home} element={<Layout />}>
-            <Route index element={<WelcomePage />} />
-            <Route
-              path={path.signUp}
-              element={
-                <SignUpInPage
-                  name='Sign UP'
-                  apiRequest={signUpRequest}
-                  isName={true}
-                  redirectPath={`/${path.signIn}`}
-                />
-              }
-            />
-            <Route
-              path={path.signIn}
-              element={
-                <SignUpInPage
-                  name='Sign IN'
-                  apiRequest={signInRequest}
-                  isName={false}
-                  redirectPath={`/${path.main}`}
-                />
-              }
-            />
-            <Route path={path.userUpdate} element={<UserUpdatePage />} />
-            <Route path={path.main} element={<MainPage />} />
-            <Route path={path.board} element={<BoardPage />} />
-            <Route path={path.notFound} element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      </div>
+      <Routes>
+        <Route path={path.home} element={<Layout />}>
+          <Route index element={<WelcomePage />} />
+          <Route
+            path={path.signUp}
+            element={
+              <SignUpInPage
+                name='Sign UP'
+                apiRequest={signUpRequest}
+                isName={true}
+                redirectPath={`/${path.signIn}`}
+              />
+            }
+          />
+          <Route
+            path={path.signIn}
+            element={
+              <SignUpInPage
+                name='Sign IN'
+                apiRequest={signInRequest}
+                isName={false}
+                redirectPath={`/${path.main}`}
+              />
+            }
+          />
+          <Route path={path.userUpdate} element={<UserUpdatePage />} />
+          <Route path={path.main} element={<MainPage />} />
+          <Route path={path.board} element={<BoardPage />} />
+          <Route path={path.notFound} element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
