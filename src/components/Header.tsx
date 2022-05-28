@@ -26,7 +26,7 @@ function Header() {
         >
           New board
         </Typography>
-        <Button component='a' href='/' color='inherit'>
+        <Button component='a' href={path.userUpdate} color='inherit'>
           Edit profile
         </Button>
         <Button component='a' href='/' color='inherit'>
