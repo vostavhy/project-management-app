@@ -1,10 +1,13 @@
 import WelcomeButtons from '../components/WelcomeButtons';
+import WelcomeCreators from '../components/WelcomeCreators';
+import WelcomeDescription from '../components/WelcomeDescription';
 
 function WelcomePage() {
   return (
     <>
-      <div>Welcome</div>
+      <WelcomeDescription />
       <WelcomeButtons />
+      <WelcomeCreators />
     </>
   );
 }

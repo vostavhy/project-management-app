@@ -14,18 +14,9 @@ function Header() {
     //</div>
     <AppBar position='static'>
       <Toolbar>
-        <Typography
-          component='a'
-          href='/'
-          variant='button'
-          sx={{
-            flexGrow: 1,
-            color: 'inherit',
-            textDecoration: 'none',
-          }}
-        >
+        <Button component='a' href={path.home} color='inherit'>
           New board
-        </Typography>
+        </Button>
         <Button component='a' href={path.userUpdate} color='inherit'>
           Edit profile
         </Button>
