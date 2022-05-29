@@ -91,7 +91,7 @@ function MainPage() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size='small' color='primary' variant='contained' sx={{ flexGrow: 1 }}>
+                    <Button size='small' color='secondary' variant='contained' sx={{ flexGrow: 1 }}>
                       Dell Board
                     </Button>
                   </CardActions>
