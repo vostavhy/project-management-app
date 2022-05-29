@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import mikalaiImg from '../static/styles/images/member1.png';
 import uladzimirImg from '../static/styles/images/member2.jpg';
 
@@ -18,7 +18,7 @@ export default function WelcomeCreators() {
   ];
 
   return (
-    <>
+    <Box sx={{ display: 'flex', gap: 2 }}>
       {members.map((member, index) => (
         <Card sx={{ maxWidth: 345 }} key={index}>
           <CardMedia component='img' height='300' image={member.img} alt='avatar' />
@@ -32,6 +32,6 @@ export default function WelcomeCreators() {
           </CardContent>
         </Card>
       ))}
-    </>
+    </Box>
   );
 }
