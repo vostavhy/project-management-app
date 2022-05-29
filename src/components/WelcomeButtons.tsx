@@ -1,22 +1,27 @@
 import { Button, Stack } from '@mui/material';
 import { path } from '../helpers/enums';
 import { getCreds } from '../helpers/auth';
+import { Link } from 'react-router-dom';
 
 export default function WelcomeButtons() {
+  const signOut = () => {
+    localStorage.clear();
+  };
+
   return (
     <Stack spacing={1}>
       {getCreds() ? (
         <>
-          <Button component='a' href={path.main} variant='contained'>
+          <Button component={Link} to={path.main} variant='contained'>
             Go to main
           </Button>
         </>
       ) : (
         <>
-          <Button component='a' href={path.signIn} variant='contained'>
+          <Button component={Link} to={path.signIn} variant='contained'>
             Sign in
           </Button>
-          <Button component='a' href={path.signUp} variant='contained'>
+          <Button component={Link} to={path.signUp} variant='contained'>
             Sign up
           </Button>
         </>
