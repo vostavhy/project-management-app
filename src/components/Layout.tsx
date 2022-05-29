@@ -13,7 +13,7 @@ function Layout() {
       }}
     >
       <Header />
-      <Container sx={{ p: 7 }}>
+      <Container maxWidth={'xl'} sx={{ p: 7 }}>
         <Outlet />
       </Container>
       <Footer />
