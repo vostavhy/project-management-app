@@ -18,14 +18,17 @@ interface IBoardId {
 }
 
 const mainStyles = {
+  title: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
   border: {
-    borderRadius: '4px',
-    boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
-    p: 1,
+    width: '100%',
   },
   wrapper: {
     display: 'flex',
-    overflow: 'hidden',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
     gap: '20px',
   },
 };
@@ -48,8 +51,8 @@ function BoardPage() {
   });
 
   return (
-    <>
-      <Container component='main'>
+    <Container sx={{ width: '100%' }}>
+      <Container sx={mainStyles.title}>
         <Box display='flex' flexDirection='column' alignItems='center'>
           <Typography variant='h3' color='initial'>
             Columns
@@ -64,9 +67,6 @@ function BoardPage() {
             >
               Choose board
             </Button>
-            <Button variant='contained' color='primary' sx={{ mt: 3, mb: 6 }}>
-              Dell Column
-            </Button>
           </Grid>
         </Box>
       </Container>
@@ -77,7 +77,7 @@ function BoardPage() {
           ))}
         </Grid>
       </Container>
-    </>
+    </Container>
   );
 }
 

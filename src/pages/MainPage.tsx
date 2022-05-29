@@ -56,7 +56,7 @@ function MainPage() {
 
   return (
     <>
-      <Container component='main' maxWidth='sm'>
+      <Container maxWidth='sm'>
         <Box display='flex' flexDirection='column' alignItems='center'>
           <Typography variant='h3' color='initial'>
             Boards

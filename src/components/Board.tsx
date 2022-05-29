@@ -21,7 +21,7 @@ const boardStyles = {
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden',
+    gap: '20px',
   },
   description: {
     overflow: 'hidden',
@@ -55,27 +55,29 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
 
   return (
     <>
-      <Container component='main'>
-        <Box display='flex' alignItems='center'>
-          <Typography variant='h3' color='initial'>
-            {order} -- {title}
-          </Typography>
-          <Button variant='contained' size='large' color='secondary' sx={{ mt: 3, mb: 6, ml: 6 }}>
-            Dell Column
-          </Button>
-        </Box>
-        <Grid container sx={{ gap: '30px ' }}>
-          <Button variant='contained' sx={{ mt: 3, mb: 6 }}>
-            Add Task
-          </Button>
-        </Grid>
-      </Container>
       <Container sx={boardStyles.border}>
-        <Grid container spacing={2} sx={boardStyles.wrapper}>
-          {tasks.map((props) => (
-            <Task key={props.id} {...props} />
-          ))}
-        </Grid>
+        <Container>
+          <Box display='flex' alignItems='center'>
+            <Typography variant='h5' color='initial'>
+              {order} -- {title}
+            </Typography>
+            <Button variant='contained' size='large' color='secondary' sx={{ mt: 3, mb: 6, ml: 6 }}>
+              Dell Column
+            </Button>
+          </Box>
+          <Grid container sx={{ gap: '30px ' }}>
+            <Button variant='contained' sx={{ mt: 3, mb: 6 }}>
+              Add Task
+            </Button>
+          </Grid>
+        </Container>
+        <Container>
+          <Grid container spacing={2} sx={boardStyles.wrapper}>
+            {tasks.map((props) => (
+              <Task key={props.id} {...props} />
+            ))}
+          </Grid>
+        </Container>
       </Container>
     </>
   );
