@@ -1,4 +1,3 @@
-import { ReactElement, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -11,36 +10,11 @@ interface IModal {
   openModal: boolean;
   title: string;
   content: string;
-  // buttonText: ReactElement | string;
   handleCloseModal: () => void;
-  // children?: JSX.Element;
 }
 
 const Modal = (props: IModal) => {
   const { openModal, handleCloseModal, title, content } = props;
-  //   visible = false,
-  //   title = '',
-  //   content = '',
-  //   buttonText = '',
-  //   children = <div></div>,
-  //   onClose,
-  // }: IModal) => {
-  //   const EscapeDown = ({ key }: KeyboardEvent) => {
-  //     if (key === 'Escape') {
-  //       onClose();
-  //     }
-  //   };
-
-  // useEffect(() => {
-  //   document.addEventListener('keydown', EscapeDown);
-  //   return () => document.removeEventListener('keydown', EscapeDown);
-  // });
-
-  // if (!visible) return null;
-  // const handleCloseModal(): void {
-  // console.log('fsmgvno');
-  // }
-
   return (
     <>
       <Dialog open={openModal} onClose={handleCloseModal}>

@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Modal from '../components/Modal';
 import { API_BOARDS, KANBAN_SERVICE_API } from '../helpers/api';
-import { MODAL_DATA } from '../helpers/modalData';
 import { getAppiResource } from '../utils/network';
 import { Box } from '@mui/system';
 import {
@@ -15,6 +13,9 @@ import {
   CardActions,
 } from '@mui/material/';
 import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getCreds } from '../helpers/auth';
+import { setHeaderState } from '../redux/header/headerSlice';
 
 export interface IBoard {
   id: string;
@@ -61,6 +62,10 @@ function MainPage() {
   useEffect(() => {
     getResource();
   });
+
+  const dispatch = useDispatch();
+  const isHeader = getCreds() ? true : false;
+  dispatch(setHeaderState(isHeader));
 
   return (
     <>
