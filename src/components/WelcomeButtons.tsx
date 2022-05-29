@@ -4,10 +4,6 @@ import { getCreds } from '../helpers/auth';
 import { Link } from 'react-router-dom';
 
 export default function WelcomeButtons() {
-  const signOut = () => {
-    localStorage.clear();
-  };
-
   return (
     <Stack spacing={1}>
       {getCreds() ? (

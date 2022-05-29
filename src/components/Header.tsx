@@ -1,11 +1,17 @@
 import { AppBar, Button, Grid, Toolbar } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { path } from '../helpers/enums';
 import { RootState } from '../redux/store';
 
 function Header() {
   const { isHeader } = useSelector((state: RootState) => state.header);
+  const navigate = useNavigate();
+
+  const signOut = () => {
+    localStorage.clear();
+    navigate(path.home);
+  };
 
   return (
     <AppBar position='static'>
@@ -21,7 +27,7 @@ function Header() {
               <Button component={Link} to={path.userUpdate} color='inherit'>
                 Edit profile
               </Button>
-              <Button component={Link} to='/' color='inherit'>
+              <Button color='inherit' onClick={signOut}>
                 Sign Out
               </Button>
             </Grid>
