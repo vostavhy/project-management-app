@@ -1,14 +1,10 @@
 import { AppBar, Button, Grid, Toolbar } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { getCreds } from '../helpers/auth';
+import { useSelector } from 'react-redux';
 import { path } from '../helpers/enums';
+import { RootState } from '../redux/store';
 
 function Header() {
-  const [isHeader, setIsHeader] = useState(false);
-
-  useEffect(() => {
-    getCreds() ? setIsHeader(true) : setIsHeader(false);
-  }, []);
+  const { isHeader } = useSelector((state: RootState) => state.header);
 
   return (
     <AppBar position='static'>

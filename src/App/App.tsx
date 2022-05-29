@@ -9,42 +9,46 @@ import { Layout } from '../components/Layout';
 import { signInRequest, signUpRequest } from '../helpers/auth';
 import UserUpdatePage from '../pages/UserUpdatePage';
 import { path } from '../helpers/enums';
+import { store } from '../redux/store';
+import { Provider } from 'react-redux';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={path.home} element={<Layout />}>
-          <Route index element={<WelcomePage />} />
-          <Route
-            path={path.signUp}
-            element={
-              <SignUpInPage
-                name='Sign UP'
-                apiRequest={signUpRequest}
-                isName={true}
-                redirectPath={`/${path.signIn}`}
-              />
-            }
-          />
-          <Route
-            path={path.signIn}
-            element={
-              <SignUpInPage
-                name='Sign IN'
-                apiRequest={signInRequest}
-                isName={false}
-                redirectPath={`/${path.main}`}
-              />
-            }
-          />
-          <Route path={path.userUpdate} element={<UserUpdatePage />} />
-          <Route path={path.main} element={<MainPage />} />
-          <Route path={path.board} element={<BoardPage />} />
-          <Route path={path.notFound} element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path={path.home} element={<Layout />}>
+            <Route index element={<WelcomePage />} />
+            <Route
+              path={path.signUp}
+              element={
+                <SignUpInPage
+                  name='Sign UP'
+                  apiRequest={signUpRequest}
+                  isName={true}
+                  redirectPath={`/${path.signIn}`}
+                />
+              }
+            />
+            <Route
+              path={path.signIn}
+              element={
+                <SignUpInPage
+                  name='Sign IN'
+                  apiRequest={signInRequest}
+                  isName={false}
+                  redirectPath={`/${path.main}`}
+                />
+              }
+            />
+            <Route path={path.userUpdate} element={<UserUpdatePage />} />
+            <Route path={path.main} element={<MainPage />} />
+            <Route path={path.board} element={<BoardPage />} />
+            <Route path={path.notFound} element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
