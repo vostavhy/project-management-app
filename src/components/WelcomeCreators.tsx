@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Paper, Typography } from '@mui/material';
 import mikalaiImg from '../static/styles/images/member1.png';
 import uladzimirImg from '../static/styles/images/member2.jpg';
 
@@ -18,20 +18,25 @@ export default function WelcomeCreators() {
   ];
 
   return (
-    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-      {members.map((member, index) => (
-        <Card sx={{ maxWidth: 345 }} key={index}>
-          <CardMedia component='img' height='300' image={member.img} alt='avatar' />
-          <CardContent>
-            <Typography gutterBottom variant='h5' component='div'>
-              {member.name}
-            </Typography>
-            <Typography variant='body2' color='text.secondary'>
-              {member.description}
-            </Typography>
-          </CardContent>
-        </Card>
-      ))}
-    </Box>
+    <Paper elevation={2}>
+      <Typography variant='h3' p={5} pt={1} pb={1}>
+        Developers
+      </Typography>
+      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', p: 5, pt: 1 }}>
+        {members.map((member, index) => (
+          <Card sx={{ maxWidth: 330 }} key={index}>
+            <CardMedia component='img' height='300' image={member.img} alt='avatar' />
+            <CardContent>
+              <Typography gutterBottom variant='h5' component='div'>
+                {member.name}
+              </Typography>
+              <Typography variant='body2' color='text.secondary'>
+                {member.description}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Box>
+    </Paper>
   );
 }

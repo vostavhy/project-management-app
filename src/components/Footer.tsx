@@ -41,6 +41,7 @@ function Footer() {
             backgroundImage: `url(${logo})`,
             backgroundRepeat: 'no-repeat',
             transition: 'all .3s ease-out',
+            mt: 1,
             ':hover': {
               filter:
                 'brightness(0) saturate(100%) invert(33%) sepia(96%) saturate(1105%) hue-rotate(187deg) brightness(92%) contrast(91%)',
