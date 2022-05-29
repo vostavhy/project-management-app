@@ -1,9 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal } from '../components/Modal';
-import { API_BOARDS, KANBAN_SERVICE_API } from '../constants/api';
-import { MODAL_DATA } from '../constants/modalData';
+import { API_BOARDS, KANBAN_SERVICE_API } from '../helpers/api';
+import { MODAL_DATA } from '../helpers/modalData';
 import { getAppiResource } from '../utils/network';
+import { Box } from '@mui/system';
+import {
+  Typography,
+  Container,
+  Grid,
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+} from '@mui/material/';
+import { Link as RouterLink } from 'react-router-dom';
 
 export interface IBoard {
   id: string;
@@ -11,19 +22,24 @@ export interface IBoard {
   description: string;
 }
 
-/// DELL
-const wrapBox = {
-  gap: '20px',
+const mainStyles = {
+  border: {
+    borderRadius: '4px',
+    boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
+    p: 1,
+  },
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+  },
+  description: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
 };
 
-const bordBox = {
-  width: '300px',
-  borderColor: 'red',
-  borderStyle: 'solid',
-  listStyleType: 'none',
-  margin: '5px',
-};
-//DELL
 function MainPage() {
   const [boards, setBoards] = useState<IBoard[]>([]);
   const [isModal, setModal] = useState(false);
@@ -40,6 +56,52 @@ function MainPage() {
 
   return (
     <>
+      <Container component='main' maxWidth='sm'>
+        <Box display='flex' flexDirection='column' alignItems='center'>
+          <Typography variant='h3' color='initial'>
+            Boards
+          </Typography>
+          <Grid container>
+            <Button
+              variant='contained'
+              color='primary'
+              sx={{ mt: 3, mb: 6 }}
+              onClick={() => setModal(true)}
+            >
+              Add Board
+            </Button>
+          </Grid>
+        </Box>
+        <Container sx={mainStyles.border}>
+          <Grid container spacing={2} sx={mainStyles.wrapper}>
+            {boards.map(({ id, title, description }) => (
+              <Grid item key={id}>
+                <Card sx={{ backgroundColor: '#eee' }}>
+                  <CardContent
+                    component={RouterLink}
+                    to='/board'
+                    state={{ boardId: id }}
+                    sx={{ padding: '0' }}
+                  >
+                    <Typography gutterBottom variant='h5'>
+                      {title}
+                    </Typography>
+                    <Typography gutterBottom variant='h5' sx={mainStyles.description}>
+                      {description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size='small' color='primary' variant='contained' sx={{ flexGrow: 1 }}>
+                      Dell Board
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Container>
+
       <Modal
         visible={isModal}
         title={MODAL_DATA.AddBoard.title}
@@ -47,20 +109,6 @@ function MainPage() {
         buttonText={<button onClick={onClose}>Close</button>}
         onClose={onClose}
       />
-      <div>
-        <button onClick={() => setModal(true)}>Add Board</button>
-      </div>
-      <ul style={wrapBox}>
-        {boards.map(({ id, title, description }) => (
-          <li key={id} style={bordBox}>
-            <Link to={'/board'} state={{ boardId: id }}>
-              <h3>{title}</h3>
-              <p className='descriptionBox'>{description}</p>
-            </Link>
-            <button>Dell Board</button>
-          </li>
-        ))}
-      </ul>
     </>
   );
 }
