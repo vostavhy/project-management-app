@@ -1,65 +1,77 @@
 import { ReactElement, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 interface IModal {
-  visible: boolean;
+  openModal: boolean;
   title: string;
   content: string;
-  buttonText: ReactElement | string;
-  onClose: () => void;
-  children?: JSX.Element;
+  // buttonText: ReactElement | string;
+  handleCloseModal: () => void;
+  // children?: JSX.Element;
 }
 
-export const Modal = ({
-  visible = false,
-  title = '',
-  content = '',
-  buttonText = '',
-  children = <div></div>,
-  onClose,
-}: IModal) => {
-  const EscapeDown = ({ key }: KeyboardEvent) => {
-    if (key === 'Escape') {
-      onClose();
-    }
-  };
+const Modal = (props: IModal) => {
+  const { openModal, handleCloseModal, title, content } = props;
+  //   visible = false,
+  //   title = '',
+  //   content = '',
+  //   buttonText = '',
+  //   children = <div></div>,
+  //   onClose,
+  // }: IModal) => {
+  //   const EscapeDown = ({ key }: KeyboardEvent) => {
+  //     if (key === 'Escape') {
+  //       onClose();
+  //     }
+  //   };
 
-  useEffect(() => {
-    document.addEventListener('keydown', EscapeDown);
-    return () => document.removeEventListener('keydown', EscapeDown);
-  });
+  // useEffect(() => {
+  //   document.addEventListener('keydown', EscapeDown);
+  //   return () => document.removeEventListener('keydown', EscapeDown);
+  // });
 
-  if (!visible) return null;
+  // if (!visible) return null;
+  // const handleCloseModal(): void {
+  // console.log('fsmgvno');
+  // }
 
   return (
     <>
-      <div
-        onClick={onClose}
-        style={{
-          width: '100vw',
-          height: '100vh',
-          position: 'absolute',
-          top: '0',
-          left: '0',
-          backgroundColor: 'rgba(51, 51, 51, .4)',
-        }}
-      >
-        <div
-          style={{ margin: '30vh 25vw', backgroundColor: 'rgb(255, 255, 255)', padding: '20px' }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div>
-            <h3>{title}</h3>
-            <span onClick={onClose}>X</span>
-          </div>
-          <div>
-            Body
-            <div>{content.replace('`', '')}</div>
-          </div>
-          Footer
-          {buttonText && <div>{buttonText}</div>}
-        </div>
-      </div>
-      <div>{children}</div>
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{content}</DialogContentText>
+          <TextField
+            autoFocus
+            margin='dense'
+            id='title'
+            label='Title'
+            type='text'
+            fullWidth
+            variant='standard'
+          />
+          <TextField
+            margin='dense'
+            id='description'
+            label='Description'
+            type='text'
+            fullWidth
+            variant='standard'
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal}>Cancel</Button>
+          <Button onClick={handleCloseModal}>Subscribe</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
+
+export default Modal;

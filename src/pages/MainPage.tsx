@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Modal } from '../components/Modal';
+import Modal from '../components/Modal';
 import { API_BOARDS, KANBAN_SERVICE_API } from '../helpers/api';
 import { MODAL_DATA } from '../helpers/modalData';
 import { getAppiResource } from '../utils/network';
@@ -41,9 +41,17 @@ const mainStyles = {
 };
 
 function MainPage() {
+  const [openModal, setOpenModal] = useState(false);
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   const [boards, setBoards] = useState<IBoard[]>([]);
-  const [isModal, setModal] = useState(false);
-  const onClose = () => setModal(false);
+  // const [isModal, setModal] = useState(false);
+  // const onClose = () => setModal(false);
 
   const getResource = async () => {
     const res = await getAppiResource(KANBAN_SERVICE_API + API_BOARDS);
@@ -66,7 +74,7 @@ function MainPage() {
               variant='contained'
               color='primary'
               sx={{ mt: 3, mb: 6 }}
-              onClick={() => setModal(true)}
+              onClick={() => handleClickOpenModal()}
             >
               Add Board
             </Button>
@@ -103,11 +111,10 @@ function MainPage() {
       </Container>
 
       <Modal
-        visible={isModal}
-        title={MODAL_DATA.AddBoard.title}
-        content={MODAL_DATA.AddBoard.content}
-        buttonText={<button onClick={onClose}>Close</button>}
-        onClose={onClose}
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        title='Add Board'
+        content='Please enter here title and description.'
       />
     </>
   );
