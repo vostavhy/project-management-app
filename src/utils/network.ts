@@ -1,4 +1,4 @@
-import { TEST_API_TOKEN } from './../constants/api';
+import { TEST_API_TOKEN } from './../helpers/api';
 export const getAppiResource = async (url: string) => {
   try {
     const res = await fetch(url, {

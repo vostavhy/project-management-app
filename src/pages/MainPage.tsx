@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal } from '../components/Modal';
-import { API_BOARDS, KANBAN_SERVICE_API } from '../helpers/api';
-import { MODAL_DATA } from '../helpers/modalData';
+import { API_BOARDS, KANBAN_SERVICE_API } from '../constants/api';
+import { MODAL_DATA } from '../constants/modalData';
 import { getAppiResource } from '../utils/network';
 
 export interface IBoard {

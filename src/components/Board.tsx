@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { API_BOARDS, API_COLUMNS, API_TASKS, KANBAN_SERVICE_API } from '../constants/api';
+import { API_BOARDS, API_COLUMNS, API_TASKS, KANBAN_SERVICE_API } from '../helpers/api';
 import { getAppiResource } from '../utils/network';
 import Task, { ITask } from './Task';
 

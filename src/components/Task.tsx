@@ -33,7 +33,7 @@ const Task: FC<ITask> = ({ id, title, order, description, userId, boardId, colum
           {order} -- {title}
         </h4>
         <p>{description}</p>
-        <img src={files.filename} alt="avatar" />
+        <img src={files.filename} alt='avatar' />
         <button>Dell Task</button>
       </li>
     </>
