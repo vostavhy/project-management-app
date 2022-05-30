@@ -13,13 +13,9 @@ interface IToken {
 }
 
 export const signUpRequest = (data: { [x: string]: unknown }): Promise<void> => {
-  console.log(data);
-  console.log(urlAPI.signUp);
   return axios
     .post(KANBAN_SERVICE_API + urlAPI.signUp, data)
-    .then((response) => {
-      console.log(response.data);
-    })
+    .then(() => {})
     .catch((error) => {
       throw `ERROR: ${error.response.data.message}`;
     });
@@ -27,12 +23,9 @@ export const signUpRequest = (data: { [x: string]: unknown }): Promise<void> => 
 
 export const signInRequest = (data: { [x: string]: unknown }) => {
   delete data.name;
-  console.log(data);
-  console.log(urlAPI.signIn);
   return axios
     .post(KANBAN_SERVICE_API + urlAPI.signIn, data)
     .then((response) => {
-      console.log(response.data);
       saveToken(response.data);
       refreshCreds(data.login as string);
     })
@@ -46,7 +39,6 @@ export const userUpdateRequest = (data: { [x: string]: unknown }) => {
   return axios
     .put(KANBAN_SERVICE_API + urlAPI.users + credsData.id, data, getConfig())
     .then((response) => {
-      console.log(response.data);
       saveCreds(response.data);
     })
     .catch((error) => {
@@ -56,8 +48,6 @@ export const userUpdateRequest = (data: { [x: string]: unknown }) => {
 
 export const userDeleteRequest = () => {
   const credsData: IUserCreds = getCreds();
-  const token = getToken();
-  console.log('token', token);
   return axios
     .delete(KANBAN_SERVICE_API + urlAPI.users + credsData.id, getConfig())
     .then(() => {
@@ -94,9 +84,7 @@ function refreshCreds(login: string) {
       })[0];
       saveCreds(creds);
     })
-    .catch((error) => {
-      console.log('refresh creds error: ', error);
-    });
+    .catch(() => {});
 }
 
 function getConfig() {
