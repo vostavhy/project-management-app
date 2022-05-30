@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from 'react';
+import { Typography, Container, Grid, Button } from '@mui/material/';
+import { Box } from '@mui/system';
+
 import { API_BOARDS, API_COLUMNS, API_TASKS, KANBAN_SERVICE_API } from '../helpers/api';
 import { getAppiResource } from '../utils/network';
 import Task, { ITask } from './Task';
-import { Box } from '@mui/system';
-import { Typography, Container, Grid, Button } from '@mui/material/';
 import Modal from './Modal';
 
 export interface IBoard {
@@ -22,6 +23,7 @@ const boardStyles = {
   },
   wrapper: {
     display: 'flex',
+    width: '250px',
     flexDirection: 'column',
     gap: '10px',
     flexWrap: 'nowrap',
@@ -52,29 +54,20 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
 
   const getResource = async () => {
     const res = await getAppiResource(
-      KANBAN_SERVICE_API +
-        API_BOARDS +
-        '/' +
-        boardId +
-        '/' +
-        API_COLUMNS +
-        '/' +
-        id +
-        '/' +
-        API_TASKS,
+      `${KANBAN_SERVICE_API}${API_BOARDS}/${boardId}/${API_COLUMNS}/${id}/${API_TASKS}`,
       'GET'
     );
     setTasks(res);
   };
 
-  const dellResource = async () => {
+  const deleteResource = async () => {
     await getAppiResource(
-      KANBAN_SERVICE_API + API_BOARDS + '/' + boardId + '/' + API_COLUMNS + '/' + id,
+      `${KANBAN_SERVICE_API}${API_BOARDS}/${boardId}/${API_COLUMNS}/${id}`,
       'DELETE'
     );
   };
 
-  const delTask = () => {
+  const deleteTask = () => {
     getResource();
   };
 
@@ -91,9 +84,9 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
               variant='contained'
               size='small'
               color='secondary'
-              onClick={() => dellResource()}
+              onClick={() => deleteResource()}
             >
-              Dell Column
+              Delete Column
             </Button>
             <Typography variant='h6' color='initial' sx={boardStyles.description}>
               {order} -- {title}
@@ -112,7 +105,7 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
         <Container>
           <Container>
             {tasks.map((props) => (
-              <Task key={props.id} {...props} delTask={delTask} />
+              <Task key={props.id} {...props} deleteTask={deleteTask} />
             ))}
           </Container>
         </Container>
@@ -125,18 +118,7 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
         content='Please enter here title and description.'
         isDescr={false}
         isUserId={true}
-        path={
-          KANBAN_SERVICE_API +
-          API_BOARDS +
-          '/' +
-          boardId +
-          '/' +
-          API_COLUMNS +
-          '/' +
-          id +
-          '/' +
-          API_TASKS
-        }
+        path={`${KANBAN_SERVICE_API}${API_BOARDS}/${boardId}/${API_COLUMNS}/${id}/${API_TASKS}`}
       />
     </>
   );

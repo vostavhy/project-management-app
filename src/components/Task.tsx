@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@mui/material/';
+
 import { getAppiResource } from '../utils/network';
 import { API_BOARDS, API_COLUMNS, API_TASKS, KANBAN_SERVICE_API } from '../helpers/api';
 
@@ -11,7 +12,7 @@ export interface ITask {
   userId: string;
   boardId: string;
   columnId: string;
-  delTask: () => void;
+  deleteTask: () => void;
   files: {
     filename: string;
     fileSize: number;
@@ -43,34 +44,13 @@ const taskStyles = {
   },
 };
 
-const Task: FC<ITask> = ({
-  id,
-  title,
-  order,
-  description,
-  userId,
-  boardId,
-  columnId,
-  files,
-  delTask,
-}) => {
-  const dellResource = async () => {
+const Task: FC<ITask> = ({ id, title, order, description, boardId, columnId, deleteTask }) => {
+  const deleteResource = async () => {
     await getAppiResource(
-      KANBAN_SERVICE_API +
-        API_BOARDS +
-        '/' +
-        boardId +
-        '/' +
-        API_COLUMNS +
-        '/' +
-        columnId +
-        '/' +
-        API_TASKS +
-        '/' +
-        id,
+      `${KANBAN_SERVICE_API}${API_BOARDS}/${boardId}/${API_COLUMNS}/${columnId}/${API_TASKS}/${id}`,
       'DELETE'
     );
-    delTask();
+    deleteTask();
   };
 
   return (
@@ -90,7 +70,6 @@ const Task: FC<ITask> = ({
             title='Image title'
             alt='mage title'
           />
-          {/* <img src={files.filename} alt='avatar' /> */}
         </CardContent>
         <CardActions>
           <Button
@@ -98,9 +77,9 @@ const Task: FC<ITask> = ({
             color='secondary'
             variant='contained'
             sx={{ flexGrow: 1 }}
-            onClick={() => dellResource()}
+            onClick={() => deleteResource()}
           >
-            Dell Task
+            Delete Task
           </Button>
         </CardActions>
       </Card>

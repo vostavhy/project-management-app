@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
-import Board from '../components/Board';
-import { API_BOARDS, API_COLUMNS, KANBAN_SERVICE_API } from '../helpers/api';
-import { getAppiResource } from '../utils/network';
+import { Link as RouterLink } from 'react-router-dom';
 import { Box } from '@mui/system';
 import { Typography, Container, Grid, Button } from '@mui/material/';
-import { Link as RouterLink } from 'react-router-dom';
-import Modal from '../components/Modal';
 
+import Board from '../components/Board';
+import Modal from '../components/Modal';
+import { API_BOARDS, API_COLUMNS, KANBAN_SERVICE_API } from '../helpers/api';
+import { getAppiResource } from '../utils/network';
 export interface IColumns {
   id: string;
   title: string;
@@ -33,12 +33,14 @@ const mainStyles = {
     flexDirection: 'row',
     flexWrap: 'nowrap',
     overflow: 'hidden',
-    maxWidth: '90vw',
+    width: '90vw',
     overflowX: 'scroll',
     borderRadius: '4px',
     boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
     position: 'relative',
     gap: '20px',
+    margin: '0',
+    pading: '0',
   },
 };
 
@@ -58,7 +60,7 @@ function BoardPage() {
 
   const getResource = async () => {
     const res = await getAppiResource(
-      KANBAN_SERVICE_API + API_BOARDS + '/' + boardId + '/' + API_COLUMNS,
+      `${KANBAN_SERVICE_API}${API_BOARDS}/${boardId}/${API_COLUMNS}`,
       'GET'
     );
     setColumns(res);
@@ -100,11 +102,9 @@ function BoardPage() {
           </Box>
         </Container>
         <Container sx={mainStyles.wrapper}>
-          <Grid container sx={mainStyles.border}>
-            {columns.map(({ id, title, order }) => (
-              <Board key={id} id={id} title={title} order={order} boardId={boardId} />
-            ))}
-          </Grid>
+          {columns.map(({ id, title, order }) => (
+            <Board key={id} id={id} title={title} order={order} boardId={boardId} />
+          ))}
         </Container>
       </Container>
 
@@ -115,7 +115,7 @@ function BoardPage() {
         content='Please enter here title'
         isDescr={true}
         isUserId={false}
-        path={KANBAN_SERVICE_API + API_BOARDS + '/' + boardId + '/' + API_COLUMNS}
+        path={`${KANBAN_SERVICE_API}${API_BOARDS}/${boardId}/${API_COLUMNS}`}
       />
     </>
   );
