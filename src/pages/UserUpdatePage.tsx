@@ -9,10 +9,12 @@ import {
 } from '@mui/material/';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { Snack } from '../components/Snack';
 import { getCreds, userDeleteRequest, userUpdateRequest } from '../helpers/auth';
 import { path } from '../helpers/enums';
+import { setHeaderState } from '../redux/header/headerSlice';
 
 export default function UpdatePage() {
   const { register, handleSubmit } = useForm();
@@ -22,6 +24,7 @@ export default function UpdatePage() {
   const [isSnackOpen, setIsSnackOpen] = useState(false);
   const [isError, setIsError] = useState(false);
   const [snackMsg, setSnackMsg] = useState('Success!');
+  const dispatch = useDispatch();
 
   const creds =
     getCreds() === null
@@ -53,6 +56,7 @@ export default function UpdatePage() {
       setIsLoading(false);
       showMsg('User was deleted!', false);
       setTimeout(() => {
+        dispatch(setHeaderState(false));
         navigate(path.home);
       }, 1000);
     } catch (error) {

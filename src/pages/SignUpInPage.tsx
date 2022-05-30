@@ -30,6 +30,7 @@ export default function SignInUpPage(props: SignProps) {
   const [isSnackOpen, setIsSnackOpen] = useState(false);
   const [isError, setIsError] = useState(false);
   const [snackMsg, setSnackMsg] = useState('Success!');
+  const dispatch = useDispatch();
 
   const { name, apiRequest, isName, redirectPath } = props;
 
@@ -45,16 +46,13 @@ export default function SignInUpPage(props: SignProps) {
       await apiRequest(data);
       setIsLoading(false);
       showMsg('Success', false);
+      if (!isName) dispatch(setHeaderState(true));
       setTimeout(() => navigate(redirectPath), 1000);
-
-      if (isName) dispatch(setHeaderState(true));
     } catch (error) {
       setIsLoading(false);
       showMsg(error as string, true);
     }
   };
-
-  const dispatch = useDispatch();
 
   return (
     <Container
