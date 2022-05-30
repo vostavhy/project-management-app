@@ -121,7 +121,10 @@ export default function UpdatePage() {
               />
             </Grid>
           </Grid>
-          <Grid container justifyContent='space-between'>
+          <Grid
+            container
+            sx={{ mt: 2, mb: 2, justifyContent: 'space-between', alignItems: 'center' }}
+          >
             <Grid item>
               <Button
                 color='error'
