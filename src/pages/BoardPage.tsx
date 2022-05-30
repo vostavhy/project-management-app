@@ -8,6 +8,7 @@ import Board from '../components/Board';
 import Modal from '../components/Modal';
 import { API_BOARDS, API_COLUMNS, KANBAN_SERVICE_API } from '../helpers/api';
 import { getAppiResource } from '../utils/network';
+
 export interface IColumns {
   id: string;
   title: string;
@@ -23,20 +24,10 @@ const mainStyles = {
     display: 'flex',
     flexDirection: 'column',
   },
-  border: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-  },
   wrapper: {
     display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    overflow: 'hidden',
     width: '90vw',
-    overflowX: 'scroll',
     borderRadius: '4px',
-    boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
     position: 'relative',
     gap: '20px',
     margin: '0',

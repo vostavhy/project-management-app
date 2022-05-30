@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@mui/material/';
 
 import { getAppiResource } from '../utils/network';
 import { API_BOARDS, API_COLUMNS, API_TASKS, KANBAN_SERVICE_API } from '../helpers/api';
+import ModalDelete from './ModalDelete';
 
 export interface ITask {
   id?: string;
@@ -23,14 +24,7 @@ const taskStyles = {
   border: {
     borderRadius: '4px',
     boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
-    flexWrap: 'nowrap',
     backgroundColor: '#eee',
-    overflow: 'hidden',
-  },
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'hidden',
   },
   description: {
     width: '95%',
@@ -51,6 +45,15 @@ const Task: FC<ITask> = ({ id, title, order, description, boardId, columnId, del
       'DELETE'
     );
     deleteTask();
+  };
+
+  // modal window
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const handleClickOpenModalDelete = () => {
+    setOpenModalDelete(true);
+  };
+  const handleCloseModalDelete = () => {
+    setOpenModalDelete(false);
   };
 
   return (
@@ -77,12 +80,18 @@ const Task: FC<ITask> = ({ id, title, order, description, boardId, columnId, del
             color='secondary'
             variant='contained'
             sx={{ flexGrow: 1 }}
-            onClick={() => deleteResource()}
+            onClick={() => handleClickOpenModalDelete()}
           >
             Delete Task
           </Button>
         </CardActions>
       </Card>
+
+      <ModalDelete
+        openModal={openModalDelete}
+        handleCloseModal={handleCloseModalDelete}
+        handleAgreeModal={deleteResource}
+      />
     </>
   );
 };

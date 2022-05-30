@@ -6,6 +6,7 @@ import { API_BOARDS, API_COLUMNS, API_TASKS, KANBAN_SERVICE_API } from '../helpe
 import { getAppiResource } from '../utils/network';
 import Task, { ITask } from './Task';
 import Modal from './Modal';
+import ModalDelete from './ModalDelete';
 
 export interface IBoard {
   id: string;
@@ -18,12 +19,10 @@ const boardStyles = {
   border: {
     borderRadius: '4px',
     boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
-    width: '500px',
-    overflow: 'hidden',
   },
   wrapper: {
     display: 'flex',
-    width: '250px',
+    width: '500px',
     flexDirection: 'column',
     gap: '10px',
     flexWrap: 'nowrap',
@@ -32,7 +31,6 @@ const boardStyles = {
     overflowY: 'scroll',
     borderRadius: '4px',
     boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
-    position: 'relative',
   },
   description: {
     width: '95%',
@@ -75,16 +73,25 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
     getResource();
   }, [openModal]);
 
+  // modal window
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const handleClickOpenModalDelete = () => {
+    setOpenModalDelete(true);
+  };
+  const handleCloseModalDelete = () => {
+    setOpenModalDelete(false);
+  };
+
   return (
     <>
       <Container sx={boardStyles.wrapper}>
         <Grid>
-          <Box display='flex' flexDirection='column' alignItems='center'>
+          <Box alignItems='center'>
             <Button
               variant='contained'
               size='small'
               color='secondary'
-              onClick={() => deleteResource()}
+              onClick={() => handleClickOpenModalDelete()}
             >
               Delete Column
             </Button>
@@ -95,7 +102,7 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
           <Grid container sx={{ gap: '20px ' }}>
             <Button
               variant='contained'
-              sx={{ mt: 1, mb: 3 }}
+              sx={{ mt: 1, mb: 1 }}
               onClick={() => handleClickOpenModal()}
             >
               Add Task
@@ -119,6 +126,12 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
         isDescr={false}
         isUserId={true}
         path={`${KANBAN_SERVICE_API}${API_BOARDS}/${boardId}/${API_COLUMNS}/${id}/${API_TASKS}`}
+      />
+
+      <ModalDelete
+        openModal={openModalDelete}
+        handleCloseModal={handleCloseModalDelete}
+        handleAgreeModal={deleteResource}
       />
     </>
   );
