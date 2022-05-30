@@ -65,15 +65,11 @@ function MainPage() {
 
   useEffect(() => {
     getResource();
-  });
+  }, [openModal]);
 
   const dispatch = useDispatch();
   const isHeader = getCreds() ? true : false;
   dispatch(setHeaderState(isHeader));
-
-  const handleAddBoard = () => {
-    console.log('requestBody');
-  };
 
   return (
     <>
@@ -132,10 +128,11 @@ function MainPage() {
       <Modal
         openModal={openModal}
         handleCloseModal={handleCloseModal}
-        getRequestBody={handleAddBoard}
         title='Add Board'
         content='Please enter here title and description.'
-        isDescr={true}
+        isDescr={false}
+        isUserId={false}
+        path={KANBAN_SERVICE_API + API_BOARDS}
       />
     </>
   );

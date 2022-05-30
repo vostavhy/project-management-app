@@ -4,6 +4,7 @@ import { getAppiResource } from '../utils/network';
 import Task, { ITask } from './Task';
 import { Box } from '@mui/system';
 import { Typography, Container, Grid, Button } from '@mui/material/';
+import Modal from './Modal';
 
 export interface IBoard {
   id: string;
@@ -32,6 +33,13 @@ const boardStyles = {
 
 const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
   const [tasks, setTasks] = useState<ITask[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const getResource = async () => {
     const res = await getAppiResource(
@@ -50,10 +58,6 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
     setTasks(res);
   };
 
-  useEffect(() => {
-    getResource();
-  }, [id]);
-
   const dellResource = async () => {
     await getAppiResource(
       KANBAN_SERVICE_API + API_BOARDS + '/' + boardId + '/' + API_COLUMNS + '/' + id,
@@ -64,6 +68,10 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
   const delTask = () => {
     getResource();
   };
+
+  useEffect(() => {
+    getResource();
+  }, [openModal]);
 
   return (
     <>
@@ -84,7 +92,11 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
             </Button>
           </Box>
           <Grid container sx={{ gap: '30px ' }}>
-            <Button variant='contained' sx={{ mt: 3, mb: 6 }}>
+            <Button
+              variant='contained'
+              sx={{ mt: 3, mb: 6 }}
+              onClick={() => handleClickOpenModal()}
+            >
               Add Task
             </Button>
           </Grid>
@@ -97,6 +109,27 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
           </Grid>
         </Container>
       </Container>
+
+      <Modal
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        title='Add Task'
+        content='Please enter here title and description.'
+        isDescr={false}
+        isUserId={true}
+        path={
+          KANBAN_SERVICE_API +
+          API_BOARDS +
+          '/' +
+          boardId +
+          '/' +
+          API_COLUMNS +
+          '/' +
+          id +
+          '/' +
+          API_TASKS
+        }
+      />
     </>
   );
 };
