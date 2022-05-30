@@ -8,6 +8,7 @@ import Board from '../components/Board';
 import Modal from '../components/Modal';
 import { API_BOARDS, API_COLUMNS, KANBAN_SERVICE_API } from '../helpers/api';
 import { getAppiResource } from '../utils/network';
+
 export interface IColumns {
   id: string;
   title: string;

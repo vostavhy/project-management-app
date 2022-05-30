@@ -6,6 +6,7 @@ import { API_BOARDS, API_COLUMNS, API_TASKS, KANBAN_SERVICE_API } from '../helpe
 import { getAppiResource } from '../utils/network';
 import Task, { ITask } from './Task';
 import Modal from './Modal';
+import ModalDelete from './ModalDelete';
 
 export interface IBoard {
   id: string;
@@ -72,6 +73,15 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
     getResource();
   }, [openModal]);
 
+  // modal window
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const handleClickOpenModalDelete = () => {
+    setOpenModalDelete(true);
+  };
+  const handleCloseModalDelete = () => {
+    setOpenModalDelete(false);
+  };
+
   return (
     <>
       <Container sx={boardStyles.wrapper}>
@@ -81,7 +91,7 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
               variant='contained'
               size='small'
               color='secondary'
-              onClick={() => deleteResource()}
+              onClick={() => handleClickOpenModalDelete()}
             >
               Delete Column
             </Button>
@@ -116,6 +126,12 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
         isDescr={false}
         isUserId={true}
         path={`${KANBAN_SERVICE_API}${API_BOARDS}/${boardId}/${API_COLUMNS}/${id}/${API_TASKS}`}
+      />
+
+      <ModalDelete
+        openModal={openModalDelete}
+        handleCloseModal={handleCloseModalDelete}
+        handleAgreeModal={deleteResource}
       />
     </>
   );
