@@ -41,7 +41,8 @@ function BoardPage() {
 
   const getResource = async () => {
     const res = await getAppiResource(
-      KANBAN_SERVICE_API + API_BOARDS + '/' + boardId + '/' + API_COLUMNS
+      KANBAN_SERVICE_API + API_BOARDS + '/' + boardId + '/' + API_COLUMNS,
+      'GET'
     );
     setColumns(res);
   };

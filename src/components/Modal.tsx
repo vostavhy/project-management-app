@@ -5,16 +5,26 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useState } from 'react';
 
 interface IModal {
   openModal: boolean;
   title: string;
   content: string;
+  isDescr: boolean;
+  // requestBody: {
+  //   title: string;
+  //   description?: string;
+  // };
+
   handleCloseModal: () => void;
+  getRequestBody: () => void;
 }
 
 const Modal = (props: IModal) => {
-  const { openModal, handleCloseModal, title, content } = props;
+  // const [requestBody, setRequestBody] = useState(null);
+
+  const { openModal, handleCloseModal, title, content, isDescr, getRequestBody } = props;
   return (
     <>
       <Dialog open={openModal} onClose={handleCloseModal}>
@@ -29,6 +39,7 @@ const Modal = (props: IModal) => {
             type='text'
             fullWidth
             variant='standard'
+            onChange={(event) => console.log(event)}
           />
           <TextField
             margin='dense'
@@ -36,12 +47,14 @@ const Modal = (props: IModal) => {
             label='Description'
             type='text'
             fullWidth
+            hiddenLabel={isDescr}
             variant='standard'
+            onChange={(event) => console.log(event)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal}>Cancel</Button>
-          <Button onClick={handleCloseModal}>Subscribe</Button>
+          <Button onClick={getRequestBody}>Subscribe</Button>
         </DialogActions>
       </Dialog>
     </>

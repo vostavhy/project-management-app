@@ -1,10 +1,9 @@
 import { TEST_API_TOKEN } from './../helpers/api';
-export const getAppiResource = async (url: string) => {
+export const getAppiResource = async (url: string, method: string) => {
   try {
     const res = await fetch(url, {
-      method: 'GET',
+      method,
       headers: {
-        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + TEST_API_TOKEN,
       },
     });
