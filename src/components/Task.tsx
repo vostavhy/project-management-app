@@ -23,14 +23,7 @@ const taskStyles = {
   border: {
     borderRadius: '4px',
     boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
-    flexWrap: 'nowrap',
     backgroundColor: '#eee',
-    overflow: 'hidden',
-  },
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'hidden',
   },
   description: {
     width: '95%',
