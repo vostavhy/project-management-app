@@ -22,7 +22,7 @@ export default function WelcomeCreators() {
       <Typography variant='h3' p={5} pt={1} pb={1}>
         Developers
       </Typography>
-      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', p: 5, pt: 1 }}>
+      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', p: 5, pt: 1, pb: 2 }}>
         {members.map((member, index) => (
           <Card sx={{ maxWidth: 330 }} key={index}>
             <CardMedia component='img' height='300' image={member.img} alt='avatar' />

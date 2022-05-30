@@ -35,8 +35,6 @@ export default function UpdatePage() {
         }
       : getCreds();
 
-  console.log('creds: ', creds);
-
   // если учетных данных нет, открывать страницу авторизации
   useEffect(() => {
     if (!getCreds()) {
