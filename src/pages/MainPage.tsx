@@ -21,17 +21,20 @@ export interface IBoard {
 }
 
 const mainStyles = {
-  border: {
-    borderRadius: '4px',
-    boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
-    p: 1,
-  },
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
+    flexWrap: 'nowrap',
     overflow: 'hidden',
+    maxHeight: '55vh',
+    overflowY: 'scroll',
+    borderRadius: '4px',
+    boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
+    p: 1,
+    position: 'relative',
   },
   description: {
+    width: '95%',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
@@ -61,17 +64,17 @@ function MainPage() {
 
   useEffect(() => {
     getResource();
-  });
+  }, [openModal]);
 
-  const handleAddBoard = () => {
-    console.log('requestBody');
-  };
+  const dispatch = useDispatch();
+  const isHeader = getCreds() ? true : false;
+  dispatch(setHeaderState(isHeader));
 
   return (
     <>
-      <Container maxWidth='sm'>
+      <Container>
         <Box display='flex' flexDirection='column' alignItems='center'>
-          <Typography variant='h3' color='initial'>
+          <Typography variant='h4' color='initial'>
             Boards
           </Typography>
           <Grid container>
@@ -85,49 +88,48 @@ function MainPage() {
             </Button>
           </Grid>
         </Box>
-        <Container sx={mainStyles.border}>
-          <Grid container spacing={2} sx={mainStyles.wrapper}>
-            {boards.map(({ id, title, description }) => (
-              <Grid item key={id}>
-                <Card sx={{ backgroundColor: '#eee' }}>
-                  <CardContent
-                    component={RouterLink}
-                    to='/board'
-                    state={{ boardId: id }}
-                    sx={{ padding: '0' }}
+        <Grid container spacing={2} sx={mainStyles.wrapper}>
+          {boards.map(({ id, title, description }) => (
+            <Grid item key={id}>
+              <Card sx={{ backgroundColor: '#eee' }}>
+                <CardContent
+                  component={RouterLink}
+                  to='/board'
+                  state={{ boardId: id }}
+                  sx={{ padding: '0' }}
+                >
+                  <Typography gutterBottom variant='h6' sx={mainStyles.description}>
+                    {title}
+                  </Typography>
+                  <Typography gutterBottom variant='h6' sx={mainStyles.description}>
+                    {description}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    size='small'
+                    color='secondary'
+                    variant='contained'
+                    sx={{ flexGrow: 1 }}
+                    onClick={() => dellResource(id)}
                   >
-                    <Typography gutterBottom variant='h5'>
-                      {title}
-                    </Typography>
-                    <Typography gutterBottom variant='h5' sx={mainStyles.description}>
-                      {description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size='small'
-                      color='secondary'
-                      variant='contained'
-                      sx={{ flexGrow: 1 }}
-                      onClick={() => dellResource(id)}
-                    >
-                      Dell Board
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+                    Dell Board
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </Container>
 
       <Modal
         openModal={openModal}
         handleCloseModal={handleCloseModal}
-        getRequestBody={handleAddBoard}
         title='Add Board'
         content='Please enter here title and description.'
-        isDescr={true}
+        isDescr={false}
+        isUserId={false}
+        path={KANBAN_SERVICE_API + API_BOARDS}
       />
     </>
   );

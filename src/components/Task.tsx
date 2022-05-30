@@ -22,8 +22,9 @@ const taskStyles = {
   border: {
     borderRadius: '4px',
     boxShadow: ' 0 0 5px rgba(0,0,0,0.3)',
-    p: 4,
+    flexWrap: 'nowrap',
     backgroundColor: '#eee',
+    overflow: 'hidden',
   },
   wrapper: {
     display: 'flex',
@@ -31,12 +32,14 @@ const taskStyles = {
     overflow: 'hidden',
   },
   description: {
+    width: '95%',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
   },
   img: {
     maxWidth: '100px',
+    maxHeight: '100px',
   },
 };
 
@@ -73,11 +76,11 @@ const Task: FC<ITask> = ({
   return (
     <>
       <Card sx={taskStyles.border}>
-        <CardContent sx={{ padding: '0' }}>
-          <Typography gutterBottom variant='h5'>
+        <CardContent>
+          <Typography gutterBottom variant='h6' sx={taskStyles.description}>
             {order}--{title}
           </Typography>
-          <Typography gutterBottom variant='h5' sx={taskStyles.description}>
+          <Typography gutterBottom variant='h6' sx={taskStyles.description}>
             {description}
           </Typography>
           <CardMedia
