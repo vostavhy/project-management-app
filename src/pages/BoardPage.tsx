@@ -59,7 +59,7 @@ function BoardPage() {
 
   useEffect(() => {
     getResource();
-  }, []);
+  }, [columns]);
 
   return (
     <>
