@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@mui/material/';
+import { getAppiResource } from '../utils/network';
+import { API_BOARDS, API_COLUMNS, API_TASKS, KANBAN_SERVICE_API } from '../helpers/api';
 
 export interface ITask {
   id?: string;
@@ -9,6 +11,7 @@ export interface ITask {
   userId: string;
   boardId: string;
   columnId: string;
+  delTask: () => void;
   files: {
     filename: string;
     fileSize: number;
@@ -37,7 +40,36 @@ const taskStyles = {
   },
 };
 
-const Task: FC<ITask> = ({ id, title, order, description, userId, boardId, columnId, files }) => {
+const Task: FC<ITask> = ({
+  id,
+  title,
+  order,
+  description,
+  userId,
+  boardId,
+  columnId,
+  files,
+  delTask,
+}) => {
+  const dellResource = async () => {
+    await getAppiResource(
+      KANBAN_SERVICE_API +
+        API_BOARDS +
+        '/' +
+        boardId +
+        '/' +
+        API_COLUMNS +
+        '/' +
+        columnId +
+        '/' +
+        API_TASKS +
+        '/' +
+        id,
+      'DELETE'
+    );
+    delTask();
+  };
+
   return (
     <>
       <Card sx={taskStyles.border}>
@@ -58,7 +90,13 @@ const Task: FC<ITask> = ({ id, title, order, description, userId, boardId, colum
           {/* <img src={files.filename} alt='avatar' /> */}
         </CardContent>
         <CardActions>
-          <Button size='small' color='secondary' variant='contained' sx={{ flexGrow: 1 }}>
+          <Button
+            size='small'
+            color='secondary'
+            variant='contained'
+            sx={{ flexGrow: 1 }}
+            onClick={() => dellResource()}
+          >
             Dell Task
           </Button>
         </CardActions>

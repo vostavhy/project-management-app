@@ -52,12 +52,15 @@ function MainPage() {
   };
 
   const [boards, setBoards] = useState<IBoard[]>([]);
-  // const [isModal, setModal] = useState(false);
-  // const onClose = () => setModal(false);
 
   const getResource = async () => {
-    const res = await getAppiResource(KANBAN_SERVICE_API + API_BOARDS);
+    const res = await getAppiResource(KANBAN_SERVICE_API + API_BOARDS, 'GET');
     setBoards(res);
+  };
+
+  const dellResource = async (id: string) => {
+    await getAppiResource(KANBAN_SERVICE_API + API_BOARDS + '/' + id, 'DELETE');
+    getResource();
   };
 
   useEffect(() => {
@@ -67,6 +70,10 @@ function MainPage() {
   const dispatch = useDispatch();
   const isHeader = getCreds() ? true : false;
   dispatch(setHeaderState(isHeader));
+
+  const handleAddBoard = () => {
+    console.log('requestBody');
+  };
 
   return (
     <>
@@ -105,7 +112,13 @@ function MainPage() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size='small' color='secondary' variant='contained' sx={{ flexGrow: 1 }}>
+                    <Button
+                      size='small'
+                      color='secondary'
+                      variant='contained'
+                      sx={{ flexGrow: 1 }}
+                      onClick={() => dellResource(id)}
+                    >
                       Dell Board
                     </Button>
                   </CardActions>
@@ -119,8 +132,10 @@ function MainPage() {
       <Modal
         openModal={openModal}
         handleCloseModal={handleCloseModal}
+        getRequestBody={handleAddBoard}
         title='Add Board'
         content='Please enter here title and description.'
+        isDescr={true}
       />
     </>
   );

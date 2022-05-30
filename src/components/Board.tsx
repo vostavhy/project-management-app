@@ -44,14 +44,26 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
         '/' +
         id +
         '/' +
-        API_TASKS
+        API_TASKS,
+      'GET'
     );
     setTasks(res);
   };
 
   useEffect(() => {
     getResource();
-  });
+  }, [id]);
+
+  const dellResource = async () => {
+    await getAppiResource(
+      KANBAN_SERVICE_API + API_BOARDS + '/' + boardId + '/' + API_COLUMNS + '/' + id,
+      'DELETE'
+    );
+  };
+
+  const delTask = () => {
+    getResource();
+  };
 
   return (
     <>
@@ -61,7 +73,13 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
             <Typography variant='h5' color='initial'>
               {order} -- {title}
             </Typography>
-            <Button variant='contained' size='large' color='secondary' sx={{ mt: 3, mb: 6, ml: 6 }}>
+            <Button
+              variant='contained'
+              size='large'
+              color='secondary'
+              sx={{ mt: 3, mb: 6, ml: 6 }}
+              onClick={() => dellResource()}
+            >
               Dell Column
             </Button>
           </Box>
@@ -74,7 +92,7 @@ const Board: FC<IBoard> = ({ id, title, order, boardId }) => {
         <Container>
           <Grid container spacing={2} sx={boardStyles.wrapper}>
             {tasks.map((props) => (
-              <Task key={props.id} {...props} />
+              <Task key={props.id} {...props} delTask={delTask} />
             ))}
           </Grid>
         </Container>
