@@ -1,12 +1,15 @@
 import { Button, Stack } from '@mui/material';
 import { path } from '../helpers/enums';
-import { getCreds } from '../helpers/auth';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 export default function WelcomeButtons() {
+  const { isHeader } = useSelector((state: RootState) => state.header);
+
   return (
     <Stack spacing={1}>
-      {getCreds() ? (
+      {isHeader ? (
         <>
           <Button component={Link} to={path.main} variant='contained'>
             Go to main

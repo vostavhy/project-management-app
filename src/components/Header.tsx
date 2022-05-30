@@ -1,15 +1,27 @@
 import { AppBar, Button, Grid, Toolbar } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { getCreds } from '../helpers/auth';
 import { path } from '../helpers/enums';
+import { setHeaderState } from '../redux/header/headerSlice';
 import { RootState } from '../redux/store';
 
 function Header() {
-  const { isHeader } = useSelector((state: RootState) => state.header);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isHeader } = useSelector((state: RootState) => state.header);
+
+  // необходимо при перезагрузке страницы обновлять стейт редьюсера
+  useEffect(() => {
+    if (getCreds()) {
+      dispatch(setHeaderState(true));
+    }
+  });
 
   const signOut = () => {
     localStorage.clear();
+    dispatch(setHeaderState(false));
     navigate(path.home);
   };
 

@@ -9,10 +9,12 @@ import {
 } from '@mui/material/';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Snack } from '../components/Snack';
 import { path } from '../helpers/enums';
+import { setHeaderState } from '../redux/header/headerSlice';
 
 export interface SignProps {
   name: string;
@@ -28,6 +30,7 @@ export default function SignInUpPage(props: SignProps) {
   const [isSnackOpen, setIsSnackOpen] = useState(false);
   const [isError, setIsError] = useState(false);
   const [snackMsg, setSnackMsg] = useState('Success!');
+  const dispatch = useDispatch();
 
   const { name, apiRequest, isName, redirectPath } = props;
 
@@ -35,6 +38,20 @@ export default function SignInUpPage(props: SignProps) {
     setIsError(isError);
     setSnackMsg(msg);
     setIsSnackOpen(true);
+  };
+
+  const submitFunc = async (data: { [x: string]: string }) => {
+    setIsLoading(true);
+    try {
+      await apiRequest(data);
+      setIsLoading(false);
+      showMsg('Success', false);
+      if (!isName) dispatch(setHeaderState(true));
+      setTimeout(() => navigate(redirectPath), 1000);
+    } catch (error) {
+      setIsLoading(false);
+      showMsg(error as string, true);
+    }
   };
 
   return (
@@ -51,22 +68,7 @@ export default function SignInUpPage(props: SignProps) {
         <Typography component='h1' variant='h5'>
           {name}
         </Typography>
-        <Box
-          component='form'
-          onSubmit={handleSubmit(async (data) => {
-            setIsLoading(true);
-            try {
-              await apiRequest(data);
-              setIsLoading(false);
-              showMsg('Success', false);
-              setTimeout(() => navigate(redirectPath), 1000);
-            } catch (error) {
-              setIsLoading(false);
-              showMsg(error as string, true);
-            }
-          })}
-          mt={3}
-        >
+        <Box component='form' onSubmit={handleSubmit(submitFunc)} mt={3}>
           <Grid container spacing={2}>
             {isName && (
               <Grid item xs={12}>
