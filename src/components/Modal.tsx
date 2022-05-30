@@ -6,25 +6,56 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
+import { getAppiResource } from '../utils/network';
+import { getCreds } from '../helpers/auth';
 
 interface IModal {
   openModal: boolean;
   title: string;
   content: string;
   isDescr: boolean;
-  // requestBody: {
-  //   title: string;
-  //   description?: string;
-  // };
-
+  isUserId: boolean;
+  path: string;
   handleCloseModal: () => void;
-  getRequestBody: () => void;
+}
+
+interface IrequestBody {
+  title: string | null;
+  description?: string | null;
+  userId?: string | null;
 }
 
 const Modal = (props: IModal) => {
-  // const [requestBody, setRequestBody] = useState(null);
+  const { openModal, handleCloseModal, title, content, isDescr, path, isUserId } = props;
 
-  const { openModal, handleCloseModal, title, content, isDescr, getRequestBody } = props;
+  const [requestBody, setRequestBody] = useState<IrequestBody>({
+    title: null,
+    description: null,
+  });
+
+  if (isDescr) {
+    delete requestBody.description;
+  }
+
+  const handleСreate = async () => {
+    const { id } = getCreds();
+    if (isUserId) {
+      requestBody.userId = id;
+    }
+    await addResource();
+    setRequestBody({ title: null, description: null });
+    handleCloseModal();
+  };
+
+  const addResource = async () => {
+    await getAppiResource(path, 'POST', requestBody);
+  };
+
+  const handleClose = () => {
+    setRequestBody({ title: null, description: null });
+    handleCloseModal();
+  };
+
   return (
     <>
       <Dialog open={openModal} onClose={handleCloseModal}>
@@ -38,8 +69,11 @@ const Modal = (props: IModal) => {
             label='Title'
             type='text'
             fullWidth
+            required
             variant='standard'
-            onChange={(event) => console.log(event)}
+            onChange={(event) =>
+              setRequestBody((requestBody) => ({ ...requestBody, title: event.target.value }))
+            }
           />
           <TextField
             margin='dense'
@@ -47,14 +81,17 @@ const Modal = (props: IModal) => {
             label='Description'
             type='text'
             fullWidth
-            hiddenLabel={isDescr}
+            required={true}
+            disabled={isDescr}
             variant='standard'
-            onChange={(event) => console.log(event)}
+            onChange={(event) =>
+              setRequestBody((requestBody) => ({ ...requestBody, description: event.target.value }))
+            }
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseModal}>Cancel</Button>
-          <Button onClick={getRequestBody}>Subscribe</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleСreate}>Subscribe</Button>
         </DialogActions>
       </Dialog>
     </>
