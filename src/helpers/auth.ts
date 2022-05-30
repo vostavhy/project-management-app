@@ -72,7 +72,7 @@ function saveToken(token: IToken) {
   localStorage.setItem('tokenData', JSON.stringify(token));
 }
 
-function getToken(): string {
+export function getToken(): string {
   const tokenData: IToken = JSON.parse(localStorage.getItem('tokenData') as string);
   return tokenData.token;
 }

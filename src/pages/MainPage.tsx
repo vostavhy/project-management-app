@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import Modal from '../components/Modal';
-import { API_BOARDS, KANBAN_SERVICE_API } from '../helpers/api';
-import { getAppiResource } from '../utils/network';
+import { Link as RouterLink } from 'react-router-dom';
 import { Box } from '@mui/system';
 import {
   Typography,
@@ -12,7 +10,10 @@ import {
   CardContent,
   CardActions,
 } from '@mui/material/';
-import { Link as RouterLink } from 'react-router-dom';
+
+import Modal from '../components/Modal';
+import { API_BOARDS, KANBAN_SERVICE_API } from '../helpers/api';
+import { getAppiResource } from '../utils/network';
 
 export interface IBoard {
   id: string;
@@ -53,12 +54,12 @@ function MainPage() {
   const [boards, setBoards] = useState<IBoard[]>([]);
 
   const getResource = async () => {
-    const res = await getAppiResource(KANBAN_SERVICE_API + API_BOARDS, 'GET');
+    const res = await getAppiResource(`${KANBAN_SERVICE_API}${API_BOARDS}`, 'GET');
     setBoards(res);
   };
 
-  const dellResource = async (id: string) => {
-    await getAppiResource(KANBAN_SERVICE_API + API_BOARDS + '/' + id, 'DELETE');
+  const deleteResource = async (id: string) => {
+    await getAppiResource(`${KANBAN_SERVICE_API}${API_BOARDS}/${id}`, 'DELETE');
     getResource();
   };
 
@@ -107,9 +108,9 @@ function MainPage() {
                     color='secondary'
                     variant='contained'
                     sx={{ flexGrow: 1 }}
-                    onClick={() => dellResource(id)}
+                    onClick={() => deleteResource(id)}
                   >
-                    Dell Board
+                    Delete Board
                   </Button>
                 </CardActions>
               </Card>
@@ -125,7 +126,7 @@ function MainPage() {
         content='Please enter here title and description.'
         isDescr={false}
         isUserId={false}
-        path={KANBAN_SERVICE_API + API_BOARDS}
+        path={`${KANBAN_SERVICE_API}${API_BOARDS}`}
       />
     </>
   );
