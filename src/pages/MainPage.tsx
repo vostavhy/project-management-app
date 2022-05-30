@@ -66,10 +66,6 @@ function MainPage() {
     getResource();
   }, [openModal]);
 
-  const dispatch = useDispatch();
-  const isHeader = getCreds() ? true : false;
-  dispatch(setHeaderState(isHeader));
-
   return (
     <>
       <Container>
