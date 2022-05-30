@@ -14,10 +14,6 @@ import {
 } from '@mui/material/';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
-import { getCreds } from '../helpers/auth';
-import { setHeaderState } from '../redux/header/headerSlice';
-
 export interface IBoard {
   id: string;
   title: string;
@@ -66,10 +62,6 @@ function MainPage() {
   useEffect(() => {
     getResource();
   });
-
-  const dispatch = useDispatch();
-  const isHeader = getCreds() ? true : false;
-  dispatch(setHeaderState(isHeader));
 
   const handleAddBoard = () => {
     console.log('requestBody');

@@ -7,10 +7,6 @@ import { getCreds } from '../helpers/auth';
 import { setHeaderState } from '../redux/header/headerSlice';
 
 function WelcomePage() {
-  const dispatch = useDispatch();
-  const isHeader = getCreds() ? true : false;
-  dispatch(setHeaderState(isHeader));
-
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={8}>
