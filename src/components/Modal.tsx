@@ -91,7 +91,7 @@ const Modal = (props: IModal) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleСreate}>Subscribe</Button>
+          <Button onClick={handleСreate}>Submit</Button>
         </DialogActions>
       </Dialog>
     </>
